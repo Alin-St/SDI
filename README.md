@@ -13,7 +13,8 @@ Mandatory requirements:
   - Have a create (add) button above the list that opens an 'add entity' page (ex. on route car/add).
   - Have an actions column for the items in the table:
     - delete button: open a confirmation modal/popup/dialog. Delete item only on confirm action.
-    - edit button: open an edit entity page (eg. on a new route /car/edit/:id) \* view button: open a show item details page. (eg. on a new route /car/details/:id)
+    - edit button: open an edit entity page (eg. on a new route /car/edit/:id)
+    - view button: open a show item details page. (eg. on a new route /car/details/:id)
 - Do not display ids on the pages / in the table
 - The list of items is an in-memory (hardcoded) list at the moment
 - Write unit tests for your features (ex. use jest / playwright / jasmine + karma depending on your chosen framework)
