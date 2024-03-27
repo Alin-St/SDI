@@ -8,7 +8,7 @@ import AllPaintingsPage from "./components/AllPaintingsPage";
 import EditPaintingPage, {
   loader as editPaintingLoader,
 } from "./components/EditPaintingPage";
-import LayoutComponent from "./components/LayoutComponent";
+import MainLayout from "./components/MainLayout";
 import ViewPaintingPage, {
   loader as viewPaitingLoader,
 } from "./components/ViewPaintingPage";
@@ -17,7 +17,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <LayoutComponent />,
+      element: <MainLayout />,
       children: [
         {
           index: true,

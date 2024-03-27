@@ -1,7 +1,7 @@
 import { Container, Paper } from "@mui/material";
 import { Outlet } from "react-router-dom";
 
-const LayoutComponent = () => {
+const MainLayout = () => {
   return (
     <Container maxWidth="xl">
       <Paper
@@ -18,4 +18,4 @@ const LayoutComponent = () => {
   );
 };
 
-export default LayoutComponent;
+export default MainLayout;
