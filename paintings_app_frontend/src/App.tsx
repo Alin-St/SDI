@@ -3,15 +3,15 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
-import AddPaintingPage from "./components/AddPaintingPage";
-import AllPaintingsPage from "./components/AllPaintingsPage";
+import AddPaintingPage from "./pages/AddPaintingPage";
+import AllPaintingsPage from "./pages/AllPaintingsPage";
 import EditPaintingPage, {
   loader as editPaintingLoader,
-} from "./components/EditPaintingPage";
-import MainLayout from "./components/MainLayout";
+} from "./pages/EditPaintingPage";
+import MainLayout from "./pages/MainLayout";
 import ViewPaintingPage, {
   loader as viewPaitingLoader,
-} from "./components/ViewPaintingPage";
+} from "./pages/ViewPaintingPage";
 
 function App() {
   const router = createBrowserRouter([
