@@ -1,10 +1,12 @@
 import { Box, Button, TextField } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { paintingService } from "../services/PaintingService";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "../contexts/ToastContext";
+import { paintingService } from "../services/PaintingService";
 
 const AddPaintingPage = () => {
   const navigate = useNavigate();
+  const showToast = useToast();
 
   const [formState, setFormState] = useState({
     name: "",
@@ -63,6 +65,7 @@ const AddPaintingPage = () => {
               formState.description,
               formState.year
             );
+            showToast("Painting added successfully");
             navigate("/paintings");
           }}
         >

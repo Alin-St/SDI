@@ -15,11 +15,13 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { paintingService } from "../services/PaintingService";
+import { useToast } from "../contexts/ToastContext";
 
 const AllPaintingsPage = () => {
   const navigate = useNavigate();
   const [paintings, setPaintings] = useState(paintingService.getAllPaintings());
   const [deleteId, setDeleteId] = useState(undefined as number | undefined);
+  const showToast = useToast();
 
   return (
     <>
@@ -101,6 +103,7 @@ const AllPaintingsPage = () => {
             onClick={() => {
               paintingService.deletePainting(deleteId!);
               setPaintings(paintingService.getAllPaintings());
+              showToast("Painting deleted successfully");
               setDeleteId(undefined);
             }}
           >
