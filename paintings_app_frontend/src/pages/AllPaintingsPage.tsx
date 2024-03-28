@@ -1,7 +1,20 @@
-import { Box, Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { paintingService } from "../services/PaintingService";
-import { useState } from "react";
 
 const AllPaintingsPage = () => {
   const navigate = useNavigate();
@@ -21,50 +34,58 @@ const AllPaintingsPage = () => {
         </Button>
       </Box>
 
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Year</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {paintings.map((p) => (
-            <tr key={p.id}>
-              <td>{p.name}</td>
-              <td>{p.description}</td>
-              <td>{p.year}</td>
-              <td>
-                <button
-                  className="btn btn-danger"
-                  type="button"
-                  onClick={() => setDeleteId(p.id)}
-                >
-                  Delete
-                </button>
-                <button
-                  className="btn btn-primary"
-                  type="button"
-                  onClick={() => navigate("/painting/edit/" + p.id.toString())}
-                >
-                  Edit
-                </button>
-                <button
-                  className="btn btn-primary"
-                  type="button"
-                  onClick={() =>
-                    navigate("/painting/details/" + p.id.toString())
-                  }
-                >
-                  View
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <TableContainer component={Paper} style={{ maxHeight: "70vh" }}>
+        <Table>
+          <TableHead
+            sx={{
+              "& .MuiTableCell-root": { fontWeight: "bold", fontSize: "1em" },
+            }}
+          >
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Description</TableCell>
+              <TableCell>Year</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {paintings.map((p) => (
+              <TableRow key={p.id}>
+                <TableCell>{p.name}</TableCell>
+                <TableCell>{p.description}</TableCell>
+                <TableCell>{p.year}</TableCell>
+                <TableCell>
+                  <Button
+                    variant="contained"
+                    sx={{ m: 1 }}
+                    onClick={() => setDeleteId(p.id)}
+                  >
+                    Delete
+                  </Button>
+                  <Button
+                    variant="contained"
+                    sx={{ m: 1 }}
+                    onClick={() =>
+                      navigate("/painting/edit/" + p.id.toString())
+                    }
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="contained"
+                    sx={{ m: 1 }}
+                    onClick={() =>
+                      navigate("/painting/details/" + p.id.toString())
+                    }
+                  >
+                    View
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
 
       <Dialog
         open={deleteId !== undefined}
