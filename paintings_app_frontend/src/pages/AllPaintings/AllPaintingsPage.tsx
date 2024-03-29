@@ -4,11 +4,8 @@ import {
   Checkbox,
   Dialog,
   DialogActions,
-  DialogContent,
   DialogTitle,
-  MenuItem,
   Paper,
-  Select,
   Stack,
   Table,
   TableBody,
@@ -16,13 +13,12 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
 } from "@mui/material";
-import Papa from "papaparse";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "../contexts/ToastContext";
-import { paintingService } from "../services/PaintingService";
+import { useToast } from "../../contexts/ToastContext";
+import { paintingService } from "../../services/PaintingService";
+import ExportPaintingsDialog from "./ExportPaintingsDialog";
 
 const AllPaintingsPage = () => {
   const navigate = useNavigate();
@@ -36,16 +32,6 @@ const AllPaintingsPage = () => {
   }
   const [deleteIds, setDeleteIds] = useState([] as number[]);
   const [showExportDialog, setShowExportDialog] = useState(false);
-  const [exportType, setExportType] = useState("");
-  if (!showExportDialog && exportType !== "") {
-    setExportType("");
-  }
-  const exportText =
-    exportType === "json"
-      ? JSON.stringify(paintings, null, 2)
-      : exportType === "csv"
-      ? Papa.unparse(paintings) + "HELLLLO "
-      : "";
 
   return (
     <>
@@ -182,50 +168,11 @@ const AllPaintingsPage = () => {
         </DialogActions>
       </Dialog>
 
-      <Dialog
-        open={showExportDialog}
-        fullWidth
-        onClose={() => setShowExportDialog(false)}
-      >
-        <DialogTitle>
-          Export all paintings to{" "}
-          <Select
-            value={exportType}
-            sx={{ minWidth: 100 }}
-            size="small"
-            onChange={(e) => setExportType(e.target.value)}
-          >
-            <MenuItem value="json">JSON</MenuItem>
-            <MenuItem value="csv">CSV</MenuItem>
-          </Select>
-        </DialogTitle>
-        <DialogContent>
-          <TextField
-            multiline
-            inputProps={{ readOnly: true }}
-            value={exportText}
-            fullWidth
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button
-            variant="outlined"
-            disabled={exportText === ""}
-            onClick={() => {
-              navigator.clipboard.writeText(exportText);
-              showToast("Export copied to clipboard");
-            }}
-          >
-            Copy to Clipboard
-          </Button>
-          <Button
-            variant="contained"
-            onClick={() => setShowExportDialog(false)}
-          >
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <ExportPaintingsDialog
+        paintings={paintings}
+        showExportDialog={showExportDialog}
+        setShowExportDialog={setShowExportDialog}
+      />
     </>
   );
 };

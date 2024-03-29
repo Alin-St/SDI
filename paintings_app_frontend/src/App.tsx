@@ -4,7 +4,7 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import AddPaintingPage from "./pages/AddPaintingPage";
-import AllPaintingsPage from "./pages/AllPaintingsPage";
+import AllPaintingsPage from "./pages/AllPaintings/AllPaintingsPage";
 import EditPaintingPage, {
   loader as editPaintingLoader,
 } from "./pages/EditPaintingPage";
