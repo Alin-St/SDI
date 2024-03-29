@@ -2,9 +2,6 @@ import {
   Button,
   ButtonGroup,
   Checkbox,
-  Dialog,
-  DialogActions,
-  DialogTitle,
   Paper,
   Stack,
   Table,
@@ -16,13 +13,12 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "../../contexts/ToastContext";
 import { paintingService } from "../../services/PaintingService";
+import DeletePaintingDialog from "./DeletePaintingDialog";
 import ExportPaintingsDialog from "./ExportPaintingsDialog";
 
 const AllPaintingsPage = () => {
   const navigate = useNavigate();
-  const showToast = useToast();
   const [paintings, setPaintings] = useState(paintingService.getAllPaintings());
   const [selectedPaintings, setSelectedPaintings] = useState([] as number[]);
   if (selectedPaintings.some((id) => !paintings.some((p) => p.id === id))) {
@@ -139,39 +135,12 @@ const AllPaintingsPage = () => {
         </Table>
       </TableContainer>
 
-      <Dialog
-        open={deleteIds.length > 0}
-        onClose={() => setDeleteIds([])}
-        aria-labelledby="alert-dialog-title"
-      >
-        <DialogTitle id="alert-dialog-title">
-          Do you really want to delete{" "}
-          {deleteIds.length > 1 ? "these items" : "this item"}?
-        </DialogTitle>
-        <DialogActions>
-          <Button
-            variant="contained"
-            onClick={() => {
-              deleteIds.forEach((deleteId) => {
-                paintingService.deletePainting(deleteId);
-              });
-              setPaintings(paintingService.getAllPaintings());
-              showToast("Painting(s) deleted successfully");
-              setDeleteIds([]);
-            }}
-          >
-            Yes
-          </Button>
-          <Button variant="outlined" onClick={() => setDeleteIds([])}>
-            No
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <DeletePaintingDialog
+        {...{ deleteIds, setDeleteIds, paintings, setPaintings }}
+      />
 
       <ExportPaintingsDialog
-        paintings={paintings}
-        showExportDialog={showExportDialog}
-        setShowExportDialog={setShowExportDialog}
+        {...{ paintings, showExportDialog, setShowExportDialog }}
       />
     </>
   );
