@@ -35,7 +35,8 @@ export default function DeletePaintingDialog(props: Props) {
               paintingService.deletePainting(deleteId);
             });
             setPaintings(paintingService.getAllPaintings());
-            showToast("Painting(s) deleted successfully");
+            const s = deleteIds.length > 1 ? "s" : "";
+            showToast("Painting" + s + " deleted successfully");
           }}
         >
           Yes
