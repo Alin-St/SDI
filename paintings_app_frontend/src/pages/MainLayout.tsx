@@ -8,6 +8,12 @@ const MainLayout = () => {
   const [snackbarText, setSnackbarText] = useState(
     undefined as string | undefined
   );
+  const [messageKey, setMessageKey] = useState(new Date().getTime());
+
+  const openSnackbar = (message: string) => {
+    setSnackbarText(message);
+    setMessageKey(new Date().getTime());
+  };
 
   const handleSnackbarClose = (
     _: React.SyntheticEvent | Event,
@@ -21,7 +27,7 @@ const MainLayout = () => {
   };
 
   return (
-    <ToastContext.Provider value={setSnackbarText}>
+    <ToastContext.Provider value={openSnackbar}>
       <Container maxWidth="xl">
         <Paper
           elevation={3}
@@ -40,6 +46,7 @@ const MainLayout = () => {
         autoHideDuration={4000}
         onClose={handleSnackbarClose}
         message={snackbarText}
+        key={messageKey}
         action={
           <IconButton
             size="small"
