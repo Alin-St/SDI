@@ -1,22 +1,33 @@
 import { Container, Paper } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import { SnackbarProvider } from "notistack";
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "../theme";
 
 const MainLayout = () => {
   return (
     <SnackbarProvider>
-      <Container maxWidth="xl">
+      <ThemeProvider theme={theme}>
         <Paper
-          elevation={3}
-          style={{
-            height: "100vh",
-            backgroundColor: "lightgray",
-            padding: "50px",
+          elevation={0}
+          sx={{
+            minHeight: "100vh",
+            borderRadius: 0,
           }}
         >
-          <Outlet />
+          <Container maxWidth="xl">
+            <Paper
+              elevation={1}
+              sx={{
+                minHeight: "100vh",
+                padding: "50px",
+              }}
+            >
+              <Outlet />
+            </Paper>
+          </Container>
         </Paper>
-      </Container>
+      </ThemeProvider>
     </SnackbarProvider>
   );
 };
