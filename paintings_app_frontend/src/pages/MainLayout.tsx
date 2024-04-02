@@ -1,33 +1,10 @@
-import CloseIcon from "@mui/icons-material/Close";
-import { Container, IconButton, Paper, Snackbar } from "@mui/material";
-import { useState } from "react";
+import { Container, Paper } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import { ToastContext } from "../contexts/ToastContext";
+import { SnackbarProvider } from "notistack";
 
 const MainLayout = () => {
-  const [snackbarText, setSnackbarText] = useState(
-    undefined as string | undefined
-  );
-  const [messageKey, setMessageKey] = useState(new Date().getTime());
-
-  const openSnackbar = (message: string) => {
-    setSnackbarText(message);
-    setMessageKey(new Date().getTime());
-  };
-
-  const handleSnackbarClose = (
-    _: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setSnackbarText(undefined);
-  };
-
   return (
-    <ToastContext.Provider value={openSnackbar}>
+    <SnackbarProvider>
       <Container maxWidth="xl">
         <Paper
           elevation={3}
@@ -40,25 +17,7 @@ const MainLayout = () => {
           <Outlet />
         </Paper>
       </Container>
-
-      <Snackbar
-        open={snackbarText !== undefined}
-        autoHideDuration={4000}
-        onClose={handleSnackbarClose}
-        message={snackbarText}
-        key={messageKey}
-        action={
-          <IconButton
-            size="small"
-            aria-label="close"
-            color="inherit"
-            onClick={handleSnackbarClose}
-          >
-            <CloseIcon fontSize="small" />
-          </IconButton>
-        }
-      />
-    </ToastContext.Provider>
+    </SnackbarProvider>
   );
 };
 

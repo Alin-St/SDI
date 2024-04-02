@@ -5,8 +5,8 @@ import {
   useLoaderData,
   useNavigate,
 } from "react-router-dom";
-import { useToast } from "../contexts/ToastContext";
 import { paintingService } from "../services/PaintingService";
+import { useSnackbar } from "notistack";
 
 export function loader({ params }: LoaderFunctionArgs): Painting {
   if (!params.id) {
@@ -23,7 +23,7 @@ const EditPaintingPage = () => {
   const navigate = useNavigate();
   const initialPainting = useLoaderData() as Painting;
   const [painting, setPainting] = useState(initialPainting);
-  const showToast = useToast();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPainting({
@@ -75,7 +75,9 @@ const EditPaintingPage = () => {
           variant="contained"
           onClick={() => {
             paintingService.updatePainting(painting.id, painting);
-            showToast("Painting updated successfully");
+            enqueueSnackbar("Painting updated successfully", {
+              variant: "success",
+            });
             navigate("/paintings");
           }}
         >

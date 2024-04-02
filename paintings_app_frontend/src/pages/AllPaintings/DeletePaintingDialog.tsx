@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
-import { useToast } from "../../contexts/ToastContext";
 import { paintingService } from "../../services/PaintingService";
+import { useSnackbar } from "notistack";
 
 interface Props {
   deleteIds: number[];
@@ -11,7 +11,7 @@ interface Props {
 
 export default function DeletePaintingDialog(props: Props) {
   const { deleteIds, setDeleteIds, paintings, setPaintings } = props;
-  const showToast = useToast();
+  const { enqueueSnackbar } = useSnackbar();
 
   if (deleteIds.some((id) => !paintings.some((p) => p.id === id))) {
     setDeleteIds(deleteIds.filter((id) => paintings.some((p) => p.id === id)));
@@ -36,7 +36,9 @@ export default function DeletePaintingDialog(props: Props) {
             });
             setPaintings(paintingService.getAllPaintings());
             const s = deleteIds.length > 1 ? "s" : "";
-            showToast("Painting" + s + " deleted successfully");
+            enqueueSnackbar("Painting" + s + " deleted successfully", {
+              variant: "success",
+            });
           }}
         >
           Yes

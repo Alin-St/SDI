@@ -8,9 +8,9 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import { useSnackbar } from "notistack";
 import Papa from "papaparse";
 import { useState } from "react";
-import { useToast } from "../../contexts/ToastContext";
 
 interface Props {
   paintings: Painting[];
@@ -20,7 +20,7 @@ interface Props {
 
 export default function ExportPaintingsDialog(props: Props) {
   const { paintings, showExportDialog, setShowExportDialog } = props;
-  const showToast = useToast();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [exportType, setExportType] = useState("");
   if (!showExportDialog && exportType !== "") {
@@ -66,7 +66,7 @@ export default function ExportPaintingsDialog(props: Props) {
           disabled={exportText === ""}
           onClick={() => {
             navigator.clipboard.writeText(exportText);
-            showToast("Export copied to clipboard");
+            enqueueSnackbar("Export copied to clipboard");
           }}
         >
           Copy to Clipboard
