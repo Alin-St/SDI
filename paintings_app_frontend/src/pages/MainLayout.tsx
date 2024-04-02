@@ -1,13 +1,18 @@
-import { Container, Paper } from "@mui/material";
-import { Outlet } from "react-router-dom";
-import { SnackbarProvider } from "notistack";
+import { Container, IconButton, Paper, Stack } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import { theme } from "../theme";
+import { SnackbarProvider } from "notistack";
+import { useState } from "react";
+import { Outlet } from "react-router-dom";
+import { darkTheme, lightTheme } from "../themes";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 
 const MainLayout = () => {
+  const [isDarkTheme, setIsDarkTheme] = useState(true);
+
   return (
     <SnackbarProvider>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
         <Paper
           elevation={0}
           sx={{
@@ -17,12 +22,18 @@ const MainLayout = () => {
         >
           <Container maxWidth="xl">
             <Paper
-              elevation={1}
+              elevation={3}
               sx={{
                 minHeight: "100vh",
                 padding: "50px",
+                paddingTop: "20px",
               }}
             >
+              <Stack direction="row" justifyContent="flex-end">
+                <IconButton onClick={() => setIsDarkTheme(!isDarkTheme)}>
+                  {isDarkTheme ? <Brightness4Icon /> : <Brightness7Icon />}
+                </IconButton>
+              </Stack>
               <Outlet />
             </Paper>
           </Container>
