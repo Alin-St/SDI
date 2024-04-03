@@ -1,12 +1,13 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { paintingService } from "../services/PaintingService";
 import { useSnackbar } from "notistack";
+import usePaintingService from "../services/PaintingService";
 
 const AddPaintingPage = () => {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
+  const { addPainting } = usePaintingService();
 
   const [formState, setFormState] = useState({
     name: "",
@@ -60,11 +61,7 @@ const AddPaintingPage = () => {
         <Button
           variant="contained"
           onClick={() => {
-            paintingService.addPainting(
-              formState.name,
-              formState.description,
-              formState.year
-            );
+            addPainting(formState.name, formState.description, formState.year);
             enqueueSnackbar("Painting added successfully", {
               variant: "success",
             });

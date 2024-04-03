@@ -1,14 +1,15 @@
 import { Button, Stack } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { paintingService } from "../../services/PaintingService";
 import DeletePaintingDialog from "./DeletePaintingDialog";
 import ExportPaintingsDialog from "./ExportPaintingsDialog";
 import PaintingsTableComponent from "./PaintingsTableComponent";
+import usePaintingService from "../../services/PaintingService";
 
 const AllPaintingsPage = () => {
   const navigate = useNavigate();
-  const [paintings, setPaintings] = useState(paintingService.getAllPaintings());
+  const { getAllPaintings } = usePaintingService();
+  const paintings = getAllPaintings();
   const [selectedPaintings, setSelectedPaintings] = useState([] as number[]);
   const [deleteIds, setDeleteIds] = useState([] as number[]);
   const [showExportDialog, setShowExportDialog] = useState(false);
@@ -55,9 +56,7 @@ const AllPaintingsPage = () => {
         deletePaintings={(ids) => setDeleteIds(ids)}
       />
 
-      <DeletePaintingDialog
-        {...{ deleteIds, setDeleteIds, paintings, setPaintings }}
-      />
+      <DeletePaintingDialog {...{ deleteIds, setDeleteIds }} />
 
       <ExportPaintingsDialog
         {...{ paintings, showExportDialog, setShowExportDialog }}

@@ -1,20 +1,19 @@
 import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
-import { paintingService } from "../../services/PaintingService";
 import { useSnackbar } from "notistack";
+import usePaintingService from "../../services/PaintingService";
 
 interface Props {
   deleteIds: number[];
   setDeleteIds: (ids: number[]) => void;
-  paintings: Painting[];
-  setPaintings: (paintings: Painting[]) => void;
 }
 
 export default function DeletePaintingDialog(props: Props) {
-  const { deleteIds, setDeleteIds, paintings, setPaintings } = props;
+  const { deleteIds, setDeleteIds } = props;
   const { enqueueSnackbar } = useSnackbar();
+  const { getPaintingById, deletePaintings } = usePaintingService();
 
-  if (deleteIds.some((id) => !paintings.some((p) => p.id === id))) {
-    setDeleteIds(deleteIds.filter((id) => paintings.some((p) => p.id === id)));
+  if (deleteIds.some((id) => getPaintingById(id) === undefined)) {
+    setDeleteIds(deleteIds.filter((id) => getPaintingById(id) !== undefined));
   }
 
   return (
@@ -31,10 +30,7 @@ export default function DeletePaintingDialog(props: Props) {
         <Button
           variant="contained"
           onClick={() => {
-            deleteIds.forEach((deleteId) => {
-              paintingService.deletePainting(deleteId);
-            });
-            setPaintings(paintingService.getAllPaintings());
+            deletePaintings(deleteIds);
             const s = deleteIds.length > 1 ? "s" : "";
             enqueueSnackbar("Painting" + s + " deleted successfully", {
               variant: "success",

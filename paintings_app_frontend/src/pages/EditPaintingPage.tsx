@@ -5,14 +5,16 @@ import {
   useLoaderData,
   useNavigate,
 } from "react-router-dom";
-import { paintingService } from "../services/PaintingService";
 import { useSnackbar } from "notistack";
+import usePaintingService from "../services/PaintingService";
 
 export function loader({ params }: LoaderFunctionArgs): Painting {
+  const { getPaintingById } = usePaintingService();
+
   if (!params.id) {
     throw new Error("Expected params.id");
   }
-  let painting = paintingService.getPaintingById(Number(params.id));
+  let painting = getPaintingById(Number(params.id));
   if (!painting) {
     throw new Error(`Uh oh, I couldn't find a painting with id "${params.id}"`);
   }
@@ -24,6 +26,7 @@ const EditPaintingPage = () => {
   const initialPainting = useLoaderData() as Painting;
   const [painting, setPainting] = useState(initialPainting);
   const { enqueueSnackbar } = useSnackbar();
+  const { updatePainting } = usePaintingService();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPainting({
@@ -74,7 +77,7 @@ const EditPaintingPage = () => {
         <Button
           variant="contained"
           onClick={() => {
-            paintingService.updatePainting(painting.id, painting);
+            updatePainting(painting.id, painting);
             enqueueSnackbar("Painting updated successfully", {
               variant: "success",
             });

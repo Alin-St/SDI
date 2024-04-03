@@ -4,13 +4,15 @@ import {
   useLoaderData,
   useNavigate,
 } from "react-router-dom";
-import { paintingService } from "../services/PaintingService";
+import usePaintingService from "../services/PaintingService";
 
 export function loader({ params }: LoaderFunctionArgs): Painting {
+  const { getPaintingById } = usePaintingService();
+
   if (!params.id) {
     throw new Error("Expected params.id");
   }
-  let painting = paintingService.getPaintingById(Number(params.id));
+  let painting = getPaintingById(Number(params.id));
   if (!painting) {
     throw new Error(`Uh oh, I couldn't find a painting with id "${params.id}"`);
   }
