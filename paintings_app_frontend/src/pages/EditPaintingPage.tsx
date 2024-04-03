@@ -66,7 +66,7 @@ const EditPaintingPage = () => {
           label="Year"
           type="number"
           name="year"
-          value={painting.year}
+          value={painting.publicationYear}
           defaultValue={0}
           onChange={handleInputChange}
         />

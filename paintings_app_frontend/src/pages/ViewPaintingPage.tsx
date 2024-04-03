@@ -55,7 +55,7 @@ const ViewPaintingPage = () => {
           variant="outlined"
           label="Year"
           type="number"
-          value={painting.year}
+          value={painting.publicationYear}
           defaultValue={0}
           inputProps={{ readOnly: true }}
         />

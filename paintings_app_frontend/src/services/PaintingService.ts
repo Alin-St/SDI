@@ -69,7 +69,9 @@ const usePaintingService = () => {
     await fetchAllPaintings();
     await Promise.all(paintings.map((p) => deletePainting(p.id)));
     await Promise.all(
-      defaultPaintings.map((p) => addPainting(p.name, p.description, p.year))
+      defaultPaintings.map((p) =>
+        addPainting(p.name, p.description, p.publicationYear)
+      )
     );
     setPaintings(defaultPaintings);
   };
