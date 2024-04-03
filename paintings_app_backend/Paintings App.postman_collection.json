@@ -161,7 +161,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": 1,\n\t\"name\": \"painting 1.2\",\n    \"description\": \"description 1\",\n    \"publicationYear\": 1001\n}\n",
+					"raw": "{\n\t\"name\": \"painting 1.2\",\n    \"description\": \"description 1\",\n    \"publicationYear\": 1001\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -169,9 +169,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}",
+					"raw": "{{base_url}}/1",
 					"host": [
 						"{{base_url}}"
+					],
+					"path": [
+						"1"
 					]
 				},
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."

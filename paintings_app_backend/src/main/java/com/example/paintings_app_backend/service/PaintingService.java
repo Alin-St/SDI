@@ -29,7 +29,8 @@ public class PaintingService {
         return repository.save(painting);
     }
 
-    public Painting update(Painting painting) {
+    public Painting update(int id, Painting painting) {
+        painting.setId(id);
         return repository.save(painting);
     }
 

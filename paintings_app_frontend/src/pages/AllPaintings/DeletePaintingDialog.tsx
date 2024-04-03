@@ -1,6 +1,13 @@
-import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+} from "@mui/material";
 import { useSnackbar } from "notistack";
 import usePaintingService from "../../services/PaintingService";
+import { useState } from "react";
 
 interface Props {
   deleteIds: number[];
@@ -11,10 +18,28 @@ export default function DeletePaintingDialog(props: Props) {
   const { deleteIds, setDeleteIds } = props;
   const { enqueueSnackbar } = useSnackbar();
   const { getPaintingById, deletePaintings } = usePaintingService();
+  const [loading, setLoading] = useState(false);
 
   if (deleteIds.some((id) => getPaintingById(id) === undefined)) {
     setDeleteIds(deleteIds.filter((id) => getPaintingById(id) !== undefined));
   }
+
+  const handleDeletePaintings = async () => {
+    setLoading(true);
+    try {
+      await deletePaintings(deleteIds);
+      enqueueSnackbar("Paintings deleted", {
+        variant: "success",
+      });
+      setDeleteIds([]);
+    } catch (error) {
+      enqueueSnackbar("Failed to delete paintings", {
+        variant: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Dialog
@@ -27,17 +52,8 @@ export default function DeletePaintingDialog(props: Props) {
         {deleteIds.length > 1 ? "these items" : "this item"}?
       </DialogTitle>
       <DialogActions>
-        <Button
-          variant="contained"
-          onClick={() => {
-            deletePaintings(deleteIds);
-            const s = deleteIds.length > 1 ? "s" : "";
-            enqueueSnackbar("Painting" + s + " deleted successfully", {
-              variant: "success",
-            });
-          }}
-        >
-          Yes
+        <Button variant="contained" onClick={handleDeletePaintings}>
+          {loading ? <CircularProgress size={24} /> : "Yes"}
         </Button>
         <Button variant="outlined" onClick={() => setDeleteIds([])}>
           No

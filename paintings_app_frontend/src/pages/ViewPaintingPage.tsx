@@ -1,27 +1,29 @@
 import { Box, Button, TextField } from "@mui/material";
-import {
-  LoaderFunctionArgs,
-  useLoaderData,
-  useNavigate,
-} from "react-router-dom";
+import { useSnackbar } from "notistack";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import usePaintingService from "../services/PaintingService";
 
-export function loader({ params }: LoaderFunctionArgs): Painting {
-  const { getPaintingById } = usePaintingService();
-
-  if (!params.id) {
-    throw new Error("Expected params.id");
-  }
-  let painting = getPaintingById(Number(params.id));
-  if (!painting) {
-    throw new Error(`Uh oh, I couldn't find a painting with id "${params.id}"`);
-  }
-  return painting;
-}
-
 const ViewPaintingPage = () => {
+  const id = Number(useParams().id);
+  const { fetchPaintingById } = usePaintingService();
+  const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const painting = useLoaderData() as Painting;
+  const [painting, setPainting] = useState({} as Painting);
+
+  useEffect(() => {
+    const fetchAsync = async () => {
+      try {
+        const p = await fetchPaintingById(id);
+        setPainting(p);
+      } catch (error) {
+        enqueueSnackbar("Failed to fetch painting. Please refresh", {
+          variant: "error",
+        });
+      }
+    };
+    fetchAsync();
+  }, []);
 
   return (
     <Box
@@ -32,22 +34,29 @@ const ViewPaintingPage = () => {
       <h1>View Painting</h1>
       <div>
         <TextField
+          variant="outlined"
           label="Name"
           value={painting.name}
+          defaultValue=" "
           inputProps={{ readOnly: true }}
         />
       </div>
       <div>
         <TextField
+          variant="outlined"
           label="Description"
           value={painting.description}
+          defaultValue=" "
           inputProps={{ readOnly: true }}
         />
       </div>
       <div>
         <TextField
+          variant="outlined"
           label="Year"
-          value={painting.year.toString()}
+          type="number"
+          value={painting.year}
+          defaultValue={0}
           inputProps={{ readOnly: true }}
         />
       </div>

@@ -5,13 +5,9 @@ import {
 } from "react-router-dom";
 import AddPaintingPage from "./pages/AddPaintingPage";
 import AllPaintingsPage from "./pages/AllPaintings/AllPaintingsPage";
-import EditPaintingPage, {
-  loader as editPaintingLoader,
-} from "./pages/EditPaintingPage";
+import EditPaintingPage from "./pages/EditPaintingPage";
 import MainLayout from "./pages/MainLayout";
-import ViewPaintingPage, {
-  loader as viewPaitingLoader,
-} from "./pages/ViewPaintingPage";
+import ViewPaintingPage from "./pages/ViewPaintingPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -38,12 +34,10 @@ function App() {
         {
           path: "painting/details/:id",
           element: <ViewPaintingPage />,
-          loader: viewPaitingLoader,
         },
         {
           path: "painting/edit/:id",
           element: <EditPaintingPage />,
-          loader: editPaintingLoader,
         },
       ],
     },

@@ -1,32 +1,30 @@
 import { Box, Button, TextField } from "@mui/material";
-import { useState } from "react";
-import {
-  LoaderFunctionArgs,
-  useLoaderData,
-  useNavigate,
-} from "react-router-dom";
 import { useSnackbar } from "notistack";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import usePaintingService from "../services/PaintingService";
 
-export function loader({ params }: LoaderFunctionArgs): Painting {
-  const { getPaintingById } = usePaintingService();
-
-  if (!params.id) {
-    throw new Error("Expected params.id");
-  }
-  let painting = getPaintingById(Number(params.id));
-  if (!painting) {
-    throw new Error(`Uh oh, I couldn't find a painting with id "${params.id}"`);
-  }
-  return painting;
-}
-
 const EditPaintingPage = () => {
-  const navigate = useNavigate();
-  const initialPainting = useLoaderData() as Painting;
-  const [painting, setPainting] = useState(initialPainting);
+  const id = Number(useParams().id);
+  const { fetchPaintingById } = usePaintingService();
   const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
+  const [painting, setPainting] = useState({} as Painting);
   const { updatePainting } = usePaintingService();
+
+  useEffect(() => {
+    const fetchAsync = async () => {
+      try {
+        const p = await fetchPaintingById(id);
+        setPainting(p);
+      } catch (error) {
+        enqueueSnackbar("Failed to fetch painting. Please refresh", {
+          variant: "error",
+        });
+      }
+    };
+    fetchAsync();
+  }, []);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPainting({
@@ -47,8 +45,8 @@ const EditPaintingPage = () => {
           variant="outlined"
           label="Name"
           name="name"
-          defaultValue={initialPainting.name}
           value={painting.name}
+          defaultValue=" "
           onChange={handleInputChange}
         />
       </div>
@@ -57,8 +55,8 @@ const EditPaintingPage = () => {
           variant="outlined"
           label="Description"
           name="description"
-          defaultValue={initialPainting.description}
           value={painting.description}
+          defaultValue=" "
           onChange={handleInputChange}
         />
       </div>
@@ -68,8 +66,8 @@ const EditPaintingPage = () => {
           label="Year"
           type="number"
           name="year"
-          defaultValue={initialPainting.year}
           value={painting.year}
+          defaultValue={0}
           onChange={handleInputChange}
         />
       </div>
