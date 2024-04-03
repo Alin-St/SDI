@@ -2,7 +2,7 @@
 
 Assignments for "Systems for Design and Implementation" course.
 
-## Lab 1 Requirements
+## Assignment 1 Requirements
 
 Mandatory requirements:
 
@@ -37,3 +37,26 @@ Extra:
 - Home:
   - export (json, csv)
   - bulk delete (cu checkbox)
+
+## Assignment 2 Requirements
+
+Requirements:
+
+- create a backend for your application using a language + framework of choice (ex: Java + Spring; Node.js + Express, etc)
+- you should design your project using Model View Controller architecture, where View is your frontend app
+- data should be persisted **in memory**
+- have at least 5 APIs, responsible for providing data for all your entity-based features:
+  - get all entities ("GET")
+  - get one entity, based on ID ("GET")
+  - create entity ("POST")
+  - update entity ("PUT")
+  - delete entity ("DELETE")
+- test your APIs using Postman
+- connect the frontend to the backend using API Requests (you can use libraries, ex. axios)
+- manage data (state) on frontend globally, using built-in tools like context (built-in state management for React) or libraries like Redux
+- have unit tests on all your features
+
+Optional:
+
+- sort, filter and pagination will be server-sided
+- optimistic responses: update your frontend data optimistically before getting a response from the server
