@@ -3,6 +3,8 @@ package com.example.paintings_app_backend.controller;
 import com.example.paintings_app_backend.domain.Painting;
 import com.example.paintings_app_backend.service.PaintingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,40 +22,44 @@ public class PaintingController {
     }
 
     @GetMapping("/hello")
-    public String hello() {
+    public ResponseEntity<String> hello() {
         testSleep();
-        return "HELLO!";
+        return ResponseEntity.ok("Hello World!");
     }
 
     @GetMapping("")
-    public List<Painting> getAll() {
+    public ResponseEntity<List<Painting>> getAll() {
         testSleep();
-        //throw new Error("Test error");
-        return service.getAll();
+        var result = service.getAll();
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/{id}")
-    public Optional<Painting> getById(@PathVariable int id) {
+    public ResponseEntity<Optional<Painting>> getById(@PathVariable int id) {
         testSleep();
-        return service.getById(id);
+        var result = service.getById(id);
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping
-    public void add(@RequestBody Painting painting) {
+    public ResponseEntity<Void> add(@RequestBody Painting painting) {
         testSleep();
         service.add(painting);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable int id, @RequestBody Painting painting) {
+    public ResponseEntity<Void> update(@PathVariable int id, @RequestBody Painting painting) {
         testSleep();
         service.update(id, painting);
+        return ResponseEntity.ok(null);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
+    public ResponseEntity<Void> delete(@PathVariable int id) {
         testSleep();
         service.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     void testSleep() {
