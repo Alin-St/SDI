@@ -64,3 +64,5 @@ DB Persistence not yet required!!! You can use in-memory repositories or lists.
 
 > si proiectul de la lab  
 > https://github.com/cinnamonbreakfast/mpp24/tree/feature/sockets_and_stores
+
+[**A2 Requirements From Course Teacher (Gabriel Mircea)**](https://ubbcluj.sharepoint.com/:b:/s/MPPFTW/EV-zWnGEj3ZEvWdOtd0oh74BNwn3TPvtAz9GV8oWfeJHJA?e=t940Zf)
