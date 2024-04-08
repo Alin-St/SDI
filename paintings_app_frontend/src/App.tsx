@@ -6,7 +6,7 @@ import {
 import AddPaintingPage from "./pages/AddPaintingPage";
 import AllPaintingsPage from "./pages/AllPaintings/AllPaintingsPage";
 import EditPaintingPage from "./pages/EditPaintingPage";
-import MainLayout from "./pages/MainLayout";
+import MainLayout from "./pages/MainLayout/MainLayout";
 import ViewPaintingPage from "./pages/ViewPaintingPage";
 
 function App() {
