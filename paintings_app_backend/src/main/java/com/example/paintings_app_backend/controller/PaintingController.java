@@ -35,10 +35,11 @@ public class PaintingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Painting>> getById(@PathVariable int id) {
+    public ResponseEntity<Painting> getById(@PathVariable int id) {
         testSleep();
         var result = service.getById(id);
-        return ResponseEntity.ok(result);
+        return result.map(ResponseEntity::ok)
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
@@ -51,13 +52,17 @@ public class PaintingController {
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable int id, @RequestBody Painting painting) {
         testSleep();
+        if (service.getById(id).isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         service.update(id, painting);
-        return ResponseEntity.ok(null);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
         testSleep();
+        if (service.getById(id).isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         service.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
