@@ -4,7 +4,7 @@ Assignments for "Systems for Design and Implementation" course.
 
 ## Assignment 1 Requirements
 
-Mandatory requirements:
+**Mandatory requirements:**
 
 - Front end application in a Javascript framework / library (React, Angular, Vue, etc...) of your choice
 - Define 1 Entity with id (numeric > 0 or string guid) and 3 attributes (at least one string and one numeric) ex. Car (id, make, model, productionYear)
@@ -21,12 +21,12 @@ Mandatory requirements:
 - Coding styles: separate your code properly into components, services
 - Have an overall nice UI / UX (no need for fancy stuff, but your site needs to have some sort of user friendly concept & styling)
 
-Optional:
+**Optional:**
 
 - Component library ( ex. Material UI, Fluent UI, Ant design) -> this might become mandatory later on
 - State management ( either by using native React Context api, Redux, etc)
 
-Extra:
+**Extra:**
 
 - In-lab: Browser persist
   - Redux (greu de folosit)
@@ -40,23 +40,27 @@ Extra:
 
 ## Assignment 2 Requirements
 
-Requirements:
+Build your backend for your application. Every CRUD operation must be on the backend side now.  
+DB Persistence not yet required!!! You can use in-memory repositories or lists.
 
-- create a backend for your application using a language + framework of choice (ex: Java + Spring; Node.js + Express, etc)
-- you should design your project using Model View Controller architecture, where View is your frontend app
-- data should be persisted **in memory**
-- have at least 5 APIs, responsible for providing data for all your entity-based features:
-  - get all entities ("GET")
-  - get one entity, based on ID ("GET")
-  - create entity ("POST")
-  - update entity ("PUT")
-  - delete entity ("DELETE")
-- test your APIs using Postman
-- connect the frontend to the backend using API Requests (you can use libraries, ex. axios)
-- manage data (state) on frontend globally, using built-in tools like context (built-in state management for React) or libraries like Redux
-- have unit tests on all your features
+**Requirements:**
+- CRUD
+  - Create (POST) should return a 201 Created status code
+  - Read (GET) should return a 200 status code
+    - 2 endpoints are required - getOne and getAll (list of all the elements)
+  - Update (PATCH) should return a 200 OK status code. Should use the ID of the entity to find it
+  - Delete (DELETE) should return a 204 No content status code WITHOUT any response body
+- Frontend should handle those calls and their respective status codes. It also must provide a visual feedback to the user (alert, snack bar, notification etc… anything)
+- If Read (by id), Update or Delete are trying to manipulate a non-existent entity, the backend should return a 404 status code and frontend should display the right message. You can also return a json with a message from the backend.
+- You must write unit tests for your endpoints (so at least 5 unit tests are expected - one for each endpoint)
 
-Optional:
+**Silver:** if the internet is down or the backend is down, store the entities in a global state management lib like Redux and keep an "unsaved" flag on it. Implement an interceptor and retry mechanism (Axios recommended).
 
-- sort, filter and pagination will be server-sided
-- optimistic responses: update your frontend data optimistically before getting a response from the server
+**Gold:** Create a cronjob that creates a new entity every 10-15 seconds and connect the backend and frontend via a WebSocket (socket.io recommended) and display the newly created entity live.
+
+> also recomandarea mea acum e sa aveti toti un global state management gen Redux sau Zustand (recomand Zustand ca e mai usor de folosit)  
+> https://github.com/pmndrs/zustand  
+> Lista de entitati ar trebui sa se tina aici acum. Pe langa asta, cele doua librarii permit si localStorage persistence cu o setare, deci la fiecare state change se va persista automat in localStorage. Cautati despre asta pls :) e destul de usor
+
+> si proiectul de la lab  
+> https://github.com/cinnamonbreakfast/mpp24/tree/feature/sockets_and_stores
