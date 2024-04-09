@@ -1,31 +1,43 @@
 import { CircularProgress } from "@mui/material";
-import { useSnackbar } from "notistack";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import usePaintingService from "../../services/PaintingService";
 
-const GlobalStateComponent = () => {
-  const [isLoading, setIsLoading] = useState(true);
+export enum LoadingStatus {
+  LOADING,
+  LOADED,
+  ERROR,
+}
+
+interface Props {
+  loadingStatus: LoadingStatus;
+  setLoadingStatus: (status: LoadingStatus) => void;
+}
+
+const GlobalStateComponent = (props: Props) => {
+  const { loadingStatus, setLoadingStatus } = props;
   const { fetchAllPaintings } = usePaintingService();
-  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     const fetchPaintings = async () => {
-      setIsLoading(true);
+      setLoadingStatus(LoadingStatus.LOADING);
       try {
         await fetchAllPaintings();
+        setLoadingStatus(LoadingStatus.LOADED);
       } catch (error) {
-        enqueueSnackbar("Failed to fetch paintings. Please refresh", {
-          variant: "error",
-        });
-      } finally {
-        setIsLoading(false);
+        setLoadingStatus(LoadingStatus.ERROR);
       }
     };
     fetchPaintings();
   }, []);
 
-  return <>{isLoading ? <CircularProgress /> : <Outlet />}</>;
+  return loadingStatus === LoadingStatus.LOADING ? (
+    <CircularProgress />
+  ) : loadingStatus === LoadingStatus.LOADED ? (
+    <Outlet />
+  ) : (
+    "Failed to fetch paintings. Please refresh."
+  );
 };
 
 export default GlobalStateComponent;

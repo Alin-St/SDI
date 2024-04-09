@@ -7,12 +7,14 @@ import { SnackbarProvider, useSnackbar } from "notistack";
 import { useState } from "react";
 import usePaintingService from "../../services/PaintingService";
 import { darkTheme, lightTheme } from "../../themes";
-import GlobalStateComponent from "./GlobalStateComponent";
+import GlobalStateComponent, { LoadingStatus } from "./GlobalStateComponent";
 
 const MainLayout = () => {
   const [isDarkTheme, setIsDarkTheme] = useState(true);
   const { setDefaultPaintings } = usePaintingService();
   const { enqueueSnackbar } = useSnackbar();
+
+  const [loadingStatus, setLoadingStatus] = useState(LoadingStatus.LOADING);
 
   const handleResetPaintings = async () => {
     try {
@@ -50,7 +52,10 @@ const MainLayout = () => {
             >
               <Stack direction="row" justifyContent="flex-end">
                 <Tooltip title="Reset paintings">
-                  <IconButton onClick={handleResetPaintings}>
+                  <IconButton
+                    onClick={handleResetPaintings}
+                    disabled={loadingStatus !== LoadingStatus.LOADED}
+                  >
                     <ReplayIcon />
                   </IconButton>
                 </Tooltip>
@@ -60,7 +65,10 @@ const MainLayout = () => {
                   </IconButton>
                 </Tooltip>
               </Stack>
-              <GlobalStateComponent />
+              <GlobalStateComponent
+                loadingStatus={loadingStatus}
+                setLoadingStatus={setLoadingStatus}
+              />
             </Paper>
           </Container>
         </Paper>
