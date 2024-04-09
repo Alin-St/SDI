@@ -52,12 +52,14 @@ const MainLayout = () => {
             >
               <Stack direction="row" justifyContent="flex-end">
                 <Tooltip title="Reset paintings">
-                  <IconButton
-                    onClick={handleResetPaintings}
-                    disabled={loadingStatus !== LoadingStatus.LOADED}
-                  >
-                    <ReplayIcon />
-                  </IconButton>
+                  <span>
+                    <IconButton
+                      onClick={handleResetPaintings}
+                      disabled={loadingStatus !== LoadingStatus.LOADED}
+                    >
+                      <ReplayIcon />
+                    </IconButton>
+                  </span>
                 </Tooltip>
                 <Tooltip title="Toggle light theme">
                   <IconButton onClick={() => setIsDarkTheme(!isDarkTheme)}>

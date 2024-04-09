@@ -20,7 +20,6 @@ const usePaintingService = () => {
   const fetchAllPaintings = async () => {
     const response = await axios.get(API_URL);
     setPaintings(response.data);
-    console.log("AIIC");
   };
 
   const getPaintingById = (id: number) => {
@@ -42,6 +41,7 @@ const usePaintingService = () => {
       description,
       year,
     });
+    console.log(response.data);
     setPaintings([...paintings, response.data]);
   };
 
@@ -69,9 +69,7 @@ const usePaintingService = () => {
     await fetchAllPaintings();
     await Promise.all(paintings.map((p) => deletePainting(p.id)));
     await Promise.all(
-      defaultPaintings.map((p) =>
-        addPainting(p.name, p.description, p.publicationYear)
-      )
+      defaultPaintings.map((p) => addPainting(p.name, p.description, p.year))
     );
     setPaintings(defaultPaintings);
   };

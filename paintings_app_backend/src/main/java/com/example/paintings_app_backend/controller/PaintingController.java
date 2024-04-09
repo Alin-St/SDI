@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -43,10 +42,11 @@ public class PaintingController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody Painting painting) {
+    public ResponseEntity<Painting> add(@RequestBody Painting painting) {
         testSleep();
-        service.add(painting);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        throw new Error();
+//        var result = service.add(painting);
+//        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

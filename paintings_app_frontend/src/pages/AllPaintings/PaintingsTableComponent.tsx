@@ -86,7 +86,7 @@ export default function PaintingsTableComponent(props: Props) {
               </TableCell>
               <TableCell>{p.name}</TableCell>
               <TableCell>{p.description}</TableCell>
-              <TableCell>{p.publicationYear}</TableCell>
+              <TableCell>{p.year}</TableCell>
               <TableCell>
                 <ButtonGroup variant="contained">
                   <Button onClick={() => deletePaintings([p.id])}>

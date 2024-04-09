@@ -12,7 +12,11 @@ public class Painting {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
+
     String name;
+
     String description;
-    int publicationYear;
+
+    @Column(name="publicationYear")
+    int year;
 }

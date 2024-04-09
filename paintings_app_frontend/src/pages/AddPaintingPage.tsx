@@ -1,25 +1,42 @@
 import { Box, Button, TextField } from "@mui/material";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import usePaintingService from "../services/PaintingService";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const AddPaintingPage = () => {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const { addPainting } = usePaintingService();
 
-  const [formState, setFormState] = useState({
-    name: "",
-    description: "",
-    year: 0,
-  });
+  const nameRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLInputElement>(null);
+  const yearRef = useRef<HTMLInputElement>(null);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormState({
-      ...formState,
-      [event.target.name]: event.target.value,
-    });
+  const [isAdding, setIsAdding] = useState(false);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const name = nameRef.current?.value || "";
+    const description = descriptionRef.current?.value || "";
+    const year = parseInt(yearRef.current?.value || "0", 10);
+
+    setIsAdding(true);
+    try {
+      await addPainting(name, description, year);
+      enqueueSnackbar("Painting added successfully", {
+        variant: "success",
+      });
+      navigate("/paintings");
+    } catch (error) {
+      enqueueSnackbar("Failed to add painting", {
+        variant: "error",
+      });
+    } finally {
+      setIsAdding(false);
+    }
   };
 
   return (
@@ -29,51 +46,52 @@ const AddPaintingPage = () => {
       }}
     >
       <h1>Add Painting</h1>
-      <div>
-        <TextField
-          variant="outlined"
-          label="Name"
-          name="name"
-          value={formState.name}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div>
-        <TextField
-          variant="outlined"
-          label="Description"
-          name="description"
-          value={formState.description}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div>
-        <TextField
-          variant="outlined"
-          label="Year"
-          type="number"
-          name="year"
-          value={formState.year.toString()}
-          onChange={handleInputChange}
-        />
-      </div>
+
+      <form onSubmit={handleSubmit}>
+        <div>
+          <TextField
+            variant="outlined"
+            label="Name"
+            inputRef={nameRef}
+            defaultValue=""
+          />
+        </div>
+        <div>
+          <TextField
+            variant="outlined"
+            label="Description"
+            inputRef={descriptionRef}
+            defaultValue=""
+          />
+        </div>
+        <div>
+          <TextField
+            variant="outlined"
+            label="Year"
+            type="number"
+            inputRef={yearRef}
+            defaultValue="0"
+          />
+        </div>
+        <div>
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            color="success"
+            loading={isAdding}
+          >
+            Save
+          </LoadingButton>
+        </div>
+      </form>
       <div>
         <Button
-          variant="contained"
-          onClick={() => {
-            addPainting(formState.name, formState.description, formState.year);
-            enqueueSnackbar("Painting added successfully", {
-              variant: "success",
-            });
-            navigate("/paintings");
-          }}
+          variant="outlined"
+          color="error"
+          disabled={isAdding}
+          onClick={() => navigate("/paintings")}
         >
-          Add Painting
-        </Button>
-      </div>
-      <div>
-        <Button variant="contained" onClick={() => navigate("/paintings")}>
-          Go Back
+          Cancel
         </Button>
       </div>
     </Box>
