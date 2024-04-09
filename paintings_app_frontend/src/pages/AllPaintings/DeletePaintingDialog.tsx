@@ -32,10 +32,14 @@ export default function DeletePaintingDialog(props: Props) {
     }
   };
 
+  const handleClose = () => {
+    setDeleteIds([]);
+  };
+
   return (
     <Dialog
       open={deleteIds.length > 0}
-      onClose={() => setDeleteIds([])}
+      onClose={handleClose}
       aria-labelledby="alert-dialog-title"
     >
       <DialogTitle id="alert-dialog-title">
@@ -50,11 +54,7 @@ export default function DeletePaintingDialog(props: Props) {
         >
           Yes
         </LoadingButton>
-        <Button
-          disabled={loading}
-          variant="outlined"
-          onClick={() => setDeleteIds([])}
-        >
+        <Button disabled={loading} variant="outlined" onClick={handleClose}>
           No
         </Button>
       </DialogActions>
