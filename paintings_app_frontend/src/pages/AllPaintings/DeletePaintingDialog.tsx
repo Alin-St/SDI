@@ -1,8 +1,8 @@
+import { LoadingButton } from "@mui/lab";
 import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import { useSnackbar } from "notistack";
-import usePaintingService from "../../services/PaintingService";
 import { useState } from "react";
-import { LoadingButton } from "@mui/lab";
+import usePaintingService from "../../services/PaintingService";
 
 interface Props {
   deleteIds: number[];
@@ -12,12 +12,8 @@ interface Props {
 export default function DeletePaintingDialog(props: Props) {
   const { deleteIds, setDeleteIds } = props;
   const { enqueueSnackbar } = useSnackbar();
-  const { getPaintingById, deletePaintings } = usePaintingService();
+  const { deletePaintings } = usePaintingService();
   const [loading, setLoading] = useState(false);
-
-  if (deleteIds.some((id) => getPaintingById(id) === undefined)) {
-    setDeleteIds(deleteIds.filter((id) => getPaintingById(id) !== undefined));
-  }
 
   const handleDeletePaintings = async () => {
     setLoading(true);

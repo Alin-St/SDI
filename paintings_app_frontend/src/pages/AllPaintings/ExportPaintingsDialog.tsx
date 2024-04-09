@@ -23,10 +23,6 @@ export default function ExportPaintingsDialog(props: Props) {
   const { enqueueSnackbar } = useSnackbar();
 
   const [exportType, setExportType] = useState("");
-  if (!showExportDialog && exportType !== "") {
-    setExportType("");
-  }
-
   const exportText =
     exportType === "json"
       ? JSON.stringify(paintings, null, 2)
@@ -34,12 +30,12 @@ export default function ExportPaintingsDialog(props: Props) {
       ? Papa.unparse(paintings)
       : "";
 
+  const handleClose = () => {
+    setShowExportDialog(false);
+  };
+
   return (
-    <Dialog
-      open={showExportDialog}
-      fullWidth
-      onClose={() => setShowExportDialog(false)}
-    >
+    <Dialog open={showExportDialog} fullWidth onClose={handleClose}>
       <DialogTitle>
         Export all paintings to{" "}
         <Select
@@ -71,7 +67,7 @@ export default function ExportPaintingsDialog(props: Props) {
         >
           Copy to Clipboard
         </Button>
-        <Button variant="contained" onClick={() => setShowExportDialog(false)}>
+        <Button variant="contained" onClick={handleClose}>
           Close
         </Button>
       </DialogActions>

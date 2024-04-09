@@ -12,6 +12,12 @@ const AllPaintingsPage = () => {
   const [selectedPaintings, setSelectedPaintings] = useState([] as number[]);
   const [deleteIds, setDeleteIds] = useState([] as number[]);
   const [showExportDialog, setShowExportDialog] = useState(false);
+  const [exportDialogKey, setExportDialogKey] = useState(Date.now());
+
+  const handleExport = () => {
+    setShowExportDialog(true);
+    setExportDialogKey(Date.now());
+  };
 
   return (
     <>
@@ -27,11 +33,7 @@ const AllPaintingsPage = () => {
         </Button>
 
         <Stack direction="row">
-          <Button
-            variant="outlined"
-            sx={{ m: 1 }}
-            onClick={() => setShowExportDialog(true)}
-          >
+          <Button variant="outlined" sx={{ m: 1 }} onClick={handleExport}>
             Export
           </Button>
           <Button
@@ -58,6 +60,7 @@ const AllPaintingsPage = () => {
       <DeletePaintingDialog {...{ deleteIds, setDeleteIds }} />
 
       <ExportPaintingsDialog
+        key={exportDialogKey}
         {...{ paintings, showExportDialog, setShowExportDialog }}
       />
     </>
