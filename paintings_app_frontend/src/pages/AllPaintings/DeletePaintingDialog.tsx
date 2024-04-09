@@ -1,13 +1,8 @@
-import {
-  Button,
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogTitle,
-} from "@mui/material";
+import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import { useSnackbar } from "notistack";
 import usePaintingService from "../../services/PaintingService";
 import { useState } from "react";
+import { LoadingButton } from "@mui/lab";
 
 interface Props {
   deleteIds: number[];
@@ -52,10 +47,18 @@ export default function DeletePaintingDialog(props: Props) {
         {deleteIds.length > 1 ? "these items" : "this item"}?
       </DialogTitle>
       <DialogActions>
-        <Button variant="contained" onClick={handleDeletePaintings}>
-          {loading ? <CircularProgress size={24} /> : "Yes"}
-        </Button>
-        <Button variant="outlined" onClick={() => setDeleteIds([])}>
+        <LoadingButton
+          loading={loading}
+          variant="contained"
+          onClick={handleDeletePaintings}
+        >
+          Yes
+        </LoadingButton>
+        <Button
+          disabled={loading}
+          variant="outlined"
+          onClick={() => setDeleteIds([])}
+        >
           No
         </Button>
       </DialogActions>

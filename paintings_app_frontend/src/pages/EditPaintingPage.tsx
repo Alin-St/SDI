@@ -88,7 +88,6 @@ const EditPaintingPage = () => {
             <LoadingButton
               type="submit"
               variant="contained"
-              color="success"
               loading={isUpdating}
             >
               Save
@@ -99,7 +98,6 @@ const EditPaintingPage = () => {
       <div>
         <Button
           variant="outlined"
-          color="error"
           disabled={isUpdating}
           onClick={() => navigate("/paintings")}
         >

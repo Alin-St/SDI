@@ -74,12 +74,7 @@ const AddPaintingPage = () => {
           />
         </div>
         <div>
-          <LoadingButton
-            type="submit"
-            variant="contained"
-            color="success"
-            loading={isAdding}
-          >
+          <LoadingButton type="submit" variant="contained" loading={isAdding}>
             Save
           </LoadingButton>
         </div>
@@ -87,7 +82,6 @@ const AddPaintingPage = () => {
       <div>
         <Button
           variant="outlined"
-          color="error"
           disabled={isAdding}
           onClick={() => navigate("/paintings")}
         >
