@@ -25,7 +25,7 @@ const AddPaintingPage = () => {
 
     setIsAdding(true);
     try {
-      await addPainting(name, description, year);
+      await addPainting({ name, description, year });
       enqueueSnackbar("Painting added successfully", {
         variant: "success",
       });

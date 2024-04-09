@@ -17,17 +17,18 @@ const MainLayout = () => {
   const [loadingStatus, setLoadingStatus] = useState(LoadingStatus.LOADING);
 
   const handleResetPaintings = async () => {
+    setLoadingStatus(LoadingStatus.LOADING);
     try {
-      console.log("reset paintings");
       await setDefaultPaintings();
       enqueueSnackbar("Paintings reset", {
         variant: "success",
       });
-      console.log("reset paintings done");
     } catch (error) {
       enqueueSnackbar("Failed to reset paintings", {
         variant: "error",
       });
+    } finally {
+      setLoadingStatus(LoadingStatus.LOADED);
     }
   };
 

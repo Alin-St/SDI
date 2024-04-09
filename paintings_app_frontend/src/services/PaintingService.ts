@@ -18,8 +18,8 @@ const usePaintingService = () => {
   const { paintings, setPaintings } = usePaintingStore();
 
   const fetchAllPaintings = async () => {
-    const response = await axios.get(API_URL);
-    setPaintings(response.data);
+    const fetchedPaintings = (await axios.get(API_URL)).data as Painting[];
+    setPaintings(fetchedPaintings);
   };
 
   const getPaintingById = (id: number) => {
@@ -27,28 +27,23 @@ const usePaintingService = () => {
   };
 
   const fetchPaintingById = async (id: number) => {
-    const response = await axios.get(API_URL + `/${id}`);
-    return response.data;
+    const fetchedPainting = (await axios.get(API_URL + `/${id}`))
+      .data as Painting;
+    return fetchedPainting;
   };
 
-  const addPainting = async (
-    name: string,
-    description: string,
-    year: number
-  ) => {
-    const response = await axios.post(API_URL, {
-      name,
-      description,
-      year,
-    });
-    console.log(response.data);
-    setPaintings([...paintings, response.data]);
+  const addPainting = async (painting: Omit<Painting, "id">) => {
+    const addedPainting = (await axios.post(API_URL, painting))
+      .data as Painting;
+    setPaintings([...paintings, addedPainting]);
   };
 
-  const updatePainting = async (id: number, updatedPainting: Painting) => {
-    await axios.put(API_URL + `/${id}`, updatedPainting);
+  const updatePainting = async (painting: Painting) => {
+    const updatedPainting = (
+      await axios.put(API_URL + `/${painting.id}`, painting)
+    ).data as Painting;
     setPaintings(
-      paintings.map((p) => (p.id === id ? { ...p, ...updatedPainting } : p))
+      paintings.map((p) => (p.id === painting.id ? updatedPainting : p))
     );
   };
 
@@ -66,12 +61,19 @@ const usePaintingService = () => {
   };
 
   const setDefaultPaintings = async () => {
-    await fetchAllPaintings();
-    await Promise.all(paintings.map((p) => deletePainting(p.id)));
+    // Fetch all paintings
+    const oldPaintings = (await axios.get(API_URL)).data as Painting[];
+    // Delete all paintings
     await Promise.all(
-      defaultPaintings.map((p) => addPainting(p.name, p.description, p.year))
+      oldPaintings.map((p) => axios.delete(API_URL + `/${p.id}`))
     );
-    setPaintings(defaultPaintings);
+    // Add default paintings
+    const newPaintings = await Promise.all(
+      defaultPaintings.map(
+        async (p) => (await axios.post(API_URL, p)).data as Painting
+      )
+    );
+    setPaintings(newPaintings);
   };
 
   return {

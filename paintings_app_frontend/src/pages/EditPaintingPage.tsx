@@ -2,21 +2,51 @@ import { Box, Button, TextField } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useNavigate, useParams } from "react-router-dom";
 import usePaintingService from "../services/PaintingService";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { LoadingButton } from "@mui/lab";
 
 const EditPaintingPage = () => {
   const id = Number(useParams().id);
   const { paintings, updatePainting } = usePaintingService();
-  const [painting, setPainting] = useState(paintings.find((p) => p.id === id));
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(typeof event.target.value);
-    setPainting({
-      ...painting,
-      [event.target.name]: event.target.value,
-    });
+  const painting = paintings.find((p) => p.id === id);
+
+  const nameRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLInputElement>(null);
+  const yearRef = useRef<HTMLInputElement>(null);
+
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const name = nameRef.current?.value || "";
+    const description = descriptionRef.current?.value || "";
+    const year = parseInt(yearRef.current?.value || "0", 10);
+
+    if (!painting?.id) throw new Error("Painting not found");
+
+    setIsUpdating(true);
+    try {
+      await updatePainting({
+        id: painting.id,
+        name,
+        description,
+        year,
+      });
+      enqueueSnackbar("Painting added successfully", {
+        variant: "success",
+      });
+      navigate("/paintings");
+    } catch (error) {
+      enqueueSnackbar("Failed to add painting", {
+        variant: "error",
+      });
+    } finally {
+      setIsUpdating(false);
+    }
   };
 
   return (
@@ -28,24 +58,21 @@ const EditPaintingPage = () => {
       {!painting ? (
         "Painting not found!"
       ) : (
-        <>
-          <h1>Edit Painting</h1>
+        <form onSubmit={handleSubmit}>
           <div>
             <TextField
               variant="outlined"
               label="Name"
-              name="name"
-              value={painting.name}
-              onChange={handleInputChange}
+              inputRef={nameRef}
+              defaultValue={painting.name}
             />
           </div>
           <div>
             <TextField
               variant="outlined"
               label="Description"
-              name="description"
-              value={painting.description}
-              onChange={handleInputChange}
+              inputRef={descriptionRef}
+              defaultValue={painting.description}
             />
           </div>
           <div>
@@ -53,30 +80,30 @@ const EditPaintingPage = () => {
               variant="outlined"
               label="Year"
               type="number"
-              name="year"
-              value={painting.year}
-              onChange={handleInputChange}
+              inputRef={yearRef}
+              defaultValue={painting.year.toString()}
             />
           </div>
           <div>
-            <Button
+            <LoadingButton
+              type="submit"
               variant="contained"
-              onClick={() => {
-                updatePainting(painting.id, painting);
-                enqueueSnackbar("Painting updated successfully", {
-                  variant: "success",
-                });
-                navigate("/paintings");
-              }}
+              color="success"
+              loading={isUpdating}
             >
-              Edit Painting
-            </Button>
+              Save
+            </LoadingButton>
           </div>
-        </>
+        </form>
       )}
       <div>
-        <Button variant="contained" onClick={() => navigate("/paintings")}>
-          Go Back
+        <Button
+          variant="outlined"
+          color="error"
+          disabled={isUpdating}
+          onClick={() => navigate("/paintings")}
+        >
+          Cancel
         </Button>
       </div>
     </Box>

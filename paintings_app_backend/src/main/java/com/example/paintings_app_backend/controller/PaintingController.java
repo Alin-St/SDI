@@ -44,18 +44,17 @@ public class PaintingController {
     @PostMapping
     public ResponseEntity<Painting> add(@RequestBody Painting painting) {
         testSleep();
-        throw new Error();
-//        var result = service.add(painting);
-//        return new ResponseEntity<>(result, HttpStatus.CREATED);
+        var result = service.add(painting);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable int id, @RequestBody Painting painting) {
+    public ResponseEntity<Painting> update(@PathVariable int id, @RequestBody Painting painting) {
         testSleep();
         if (service.getById(id).isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        service.update(id, painting);
-        return new ResponseEntity<>(HttpStatus.OK);
+        var result = service.update(id, painting);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
