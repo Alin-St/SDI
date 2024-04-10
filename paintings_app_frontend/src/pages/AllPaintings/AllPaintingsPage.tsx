@@ -9,10 +9,17 @@ import PaintingsTableComponent from "./PaintingsTableComponent";
 const AllPaintingsPage = () => {
   const navigate = useNavigate();
   const { paintings } = usePaintingService();
-  const [selectedPaintings, setSelectedPaintings] = useState([] as number[]);
-  const [deleteIds, setDeleteIds] = useState([] as number[]);
+  const [selectedPaintings, setSelectedPaintings] = useState<number[]>([]);
+  const [deleteIds, setDeleteIds] = useState<number[]>([]);
   const [showExportDialog, setShowExportDialog] = useState(false);
   const [exportDialogKey, setExportDialogKey] = useState(Date.now());
+
+  // Deselect paintings that are no longer in the list
+  if (selectedPaintings.some((id) => !paintings.some((p) => p.id === id))) {
+    setSelectedPaintings(
+      selectedPaintings.filter((id) => paintings.some((p) => p.id === id))
+    );
+  }
 
   const handleExport = () => {
     setShowExportDialog(true);

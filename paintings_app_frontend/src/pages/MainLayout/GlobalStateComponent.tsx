@@ -14,11 +14,16 @@ interface Props {
   setLoadingStatus: (status: LoadingStatus) => void;
 }
 
+let didInit = false;
+
 const GlobalStateComponent = (props: Props) => {
   const { loadingStatus, setLoadingStatus } = props;
   const { fetchAllPaintings } = usePaintingService();
 
   useEffect(() => {
+    if (didInit) return;
+    didInit = true;
+
     const fetchPaintings = async () => {
       setLoadingStatus(LoadingStatus.LOADING);
       try {

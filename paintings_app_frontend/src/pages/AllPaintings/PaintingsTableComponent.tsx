@@ -10,7 +10,6 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { useEffect } from "react";
 
 interface Props {
   paintings: Painting[];
@@ -30,12 +29,6 @@ export default function PaintingsTableComponent(props: Props) {
     editPainting,
     deletePaintings,
   } = props;
-
-  useEffect(() => {
-    setSelectedPaintings(
-      selectedPaintings.filter((id) => paintings.some((p) => p.id === id))
-    );
-  }, [paintings]);
 
   return (
     <TableContainer component={Paper} style={{ maxHeight: "70vh" }}>
