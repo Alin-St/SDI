@@ -4,11 +4,13 @@ import com.example.paintings_app_backend.domain.Painting;
 import com.example.paintings_app_backend.repository.IPaintingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class PaintingService {
     final IPaintingRepository repository;
 

@@ -44,6 +44,8 @@ public class PaintingController {
     @PostMapping
     public ResponseEntity<Painting> add(@RequestBody Painting painting) {
         testSleep();
+        if (painting.getId() != 0)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         var result = service.add(painting);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
