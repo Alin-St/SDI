@@ -28,6 +28,8 @@ public class PaintingService {
     }
 
     public Painting add(Painting painting) {
+        if (painting.getId() != 0)
+            throw new IllegalArgumentException("Id must be 0 for new entity");
         return repository.save(painting);
     }
 
