@@ -44,6 +44,7 @@ Build your backend for your application. Every CRUD operation must be on the bac
 DB Persistence not yet required!!! You can use in-memory repositories or lists.
 
 **Requirements:**
+
 - CRUD
   - Create (POST) should return a 201 Created status code
   - Read (GET) should return a 200 status code
@@ -66,3 +67,35 @@ DB Persistence not yet required!!! You can use in-memory repositories or lists.
 > https://github.com/cinnamonbreakfast/mpp24/tree/feature/sockets_and_stores
 
 [**A2 Requirements From Course Teacher (Gabriel Mircea)**](https://ubbcluj.sharepoint.com/:b:/s/MPPFTW/EV-zWnGEj3ZEvWdOtd0oh74BNwn3TPvtAz9GV8oWfeJHJA?e=t940Zf)
+
+## Assignment 3 Requirements
+
+MANDATORY requirements for presenting the assignment(with
+grade 5):
+
+- create another entity in the domain of your application
+  which is in a one-to-many relationship with your initial
+  entity and implement CRUD operations on this entity as
+  well on the back end of your application
+- implement server-side persistency for the entities stored
+  on the back-end of your application
+- everything has to be consistently tested for the
+  assignment to be submitted correctly
+- consider cyber-security aspects in your implementation (
+  SQL injection, possible DDOS attacks, cross-site scripting)
+  as the silver and gold challenges might relate to those
+  aspects
+- in order for you to receive a passing grade for this
+  assignment you will also need to implement some
+  AD-HOC TASKS given by your lab teacher [ the lab will
+  not receive passing grade unless the lab teacher is
+  satisfied with your ad-hoc work ]
+
+Silver and gold challenges will be given by your teacher during
+the lab:
+
+- implementing the silver challenge gives you extra 2
+  points to your lab grade for this assignment
+- implementing the gold challenge gives you extra 3
+  points
+- silver and gold challenges are not mandatory
