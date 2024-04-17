@@ -19,4 +19,12 @@ public class Painting {
 
     @Column(name="publicationYear")
     int year;
+
+    @ManyToOne
+    Painter painter;
+
+    public void setPainterId(int value) {
+        painter = new Painter();
+        painter.setId(value);
+    }
 }

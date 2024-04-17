@@ -1,7 +1,7 @@
 package com.example.paintings_app_backend.controller;
 
-import com.example.paintings_app_backend.domain.Painting;
-import com.example.paintings_app_backend.service.PaintingService;
+import com.example.paintings_app_backend.domain.Painter;
+import com.example.paintings_app_backend.service.PainterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,30 +11,30 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/api/paintings")
-public class PaintingController {
-    final PaintingService service;
+@RequestMapping("/api/painters")
+public class PainterController {
+    final PainterService service;
 
     @Autowired
-    public PaintingController(PaintingService service) {
+    public PainterController(PainterService service) {
         this.service = service;
     }
 
     @GetMapping("/hello")
     public ResponseEntity<String> hello() {
         testSleep();
-        return ResponseEntity.ok("Hello from PaintingController!");
+        return ResponseEntity.ok("Hello from PainterController!");
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Painting>> getAll() {
+    public ResponseEntity<List<Painter>> getAll() {
         testSleep();
         var result = service.getAll();
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Painting> getById(@PathVariable int id) {
+    public ResponseEntity<Painter> getById(@PathVariable int id) {
         testSleep();
         var result = service.getById(id);
         return result.map(ResponseEntity::ok)
@@ -42,10 +42,10 @@ public class PaintingController {
     }
 
     @PostMapping
-    public ResponseEntity<Painting> add(@RequestBody Painting painting) {
+    public ResponseEntity<Painter> add(@RequestBody Painter painter) {
         testSleep();
         try {
-            var result = service.add(painting);
+            var result = service.add(painter);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -53,11 +53,11 @@ public class PaintingController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Painting> update(@PathVariable int id, @RequestBody Painting painting) {
+    public ResponseEntity<Painter> update(@PathVariable int id, @RequestBody Painter painter) {
         testSleep();
         if (service.getById(id).isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        var result = service.update(id, painting);
+        var result = service.update(id, painter);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
