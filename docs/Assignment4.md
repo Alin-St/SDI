@@ -47,7 +47,7 @@ Silver: Account activation via Email
     - If no account is linked to that validation token, you must display the right message (ex: "Could not find any account linked to this email… Maybe sign up first?")
   - Validation is kept under a flag in the DB (a bool column)
 
-Gold: Implement a 2nd factor auth method
+<s>Gold: Implement a 2nd factor auth method</s>
 
 - After the user logs in, you should send a 200 OK message with the following code in the message body:
 
@@ -82,8 +82,11 @@ Things to consider for this assignment:
 > Q: Cum vrea Gabi sa facem si session management si tokens? Nu sunt doua metode diferite?  
 > A: Din moment ce n a mentionat probabil its up to you. Cred ca stateless e mai usor
 
-> Clarificari…  
-> ![alt text](a4-p3.jpg)
+> Clarificari…
+>
+> > Gabi Mircea:  
+> > Nu ii musai sa managerieze sessionul, doar sa fie tokenized accesul la datele userului
+
 > Deci probabil puteti folosi identity management services or similar
 
 > Q: Si acum daca am facut cu session trebuie sa schimb sa fac cu token?  
@@ -92,7 +95,7 @@ Things to consider for this assignment:
 > Q: Nu putem da drop la requirementul cu deploy la backend? Ca ar trebui sa punem si backendul si baza de date, si pe chestii gen aws se pot face niste costuri mari din neatentie  
 > A: Puteti folosi EC2 ala din free tier si dockerizati baza de date pe masina virtuala. Si dupa turn off la masina pana la laborator, ca sa nu genereze costuri
 
-> pls sa nu faceti gold, aparent domnu vrea roles la gold  
+> **pls sa nu faceti gold**, aparent domnu vrea roles la gold  
 > also ideea din spatele temei pt maine e ca fiecare user sa isi acceseze propriile resurse. Nu poti accesa resursele create de contul A de pe contul B
 > nu mai stiu daca e mentionat sau nu
 
@@ -119,13 +122,13 @@ Things to consider for this assignment:
 > Good news @all. Nu vor fi penalizari pt deploy pe azi. Vom intra in asta data viitoare + docker. Focus on auth acum  
 > Also cei ce nu ati terminat azi puteti trimite pana maine pe la ~16. M am gandit sa va mai dau niste timp ca e totusi ultimul lab
 
-> Q: Pana la urma avem requirments pentru silver si gold de la Gabi?
+> Q: Pana la urma avem requirments pentru silver si gold de la Gabi?  
 > A: Acum incerc sa le obtin
 
 > Am mai aflat ca inca puteti preda platinum de la lab urile din urma fara penalizari. Iar pt gold si silver punctajul de înjumătățește de la o sapt la alta  
 > Daca sunt care vor sa mai predea din urma sa mi scrieti pls ca sa vedem cum facem
 
-> Q: Ce platinum?
+> Q: Ce platinum?  
 > A: Pt nota 5
 
 > Q: Pai si nu are Gabi totusi de gand sa le trimita? Ca noi mai avem doua zile pana la lab:)))  
