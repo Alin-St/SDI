@@ -11,3 +11,13 @@ Assignments for "Systems for Design and Implementation" course.
 [Assignment 4](/docs/Assignment4.md)
 
 [Lab Project Example (with teacher)](https://github.com/cinnamonbreakfast/mpp24/tree/feature/sockets_and_stores)
+
+Project Structure:
+- Frontend
+  - React + Vite + Material UI
+  - IDE: VS Code
+  - Package manager: npm
+- Backend
+  - Java + Spring
+  - IDE: IntelliJ IDEA
+  - SDK: 17
