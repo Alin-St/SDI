@@ -139,3 +139,6 @@ Things to consider for this assignment:
 
 > Q: Dar la examen ce va fi?  
 > A: Ce a fost si la teme cu siguranță
+
+> Q: si daca am facut deja silver-ul si gold-ul dat de tine?  
+> A: ai 10
