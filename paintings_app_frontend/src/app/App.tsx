@@ -3,11 +3,11 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
-import AddPaintingPage from "./pages/AddPaintingPage";
-import AllPaintingsPage from "./pages/AllPaintings/AllPaintingsPage";
-import EditPaintingPage from "./pages/EditPaintingPage";
-import MainLayout from "./pages/MainLayout/MainLayout";
-import ViewPaintingPage from "./pages/ViewPaintingPage";
+import MainLayout from "./MainLayout";
+import AllPaintingsPage from "./paintings/AllPaintingsPage";
+import AddPaintingPage from "./paintings/add/AddPaintingPage";
+import ViewPaintingPage from "./paintings/details/ViewPaintingPage";
+import EditPaintingPage from "./paintings/edit/EditPaintingPage";
 
 function App() {
   const router = createBrowserRouter([

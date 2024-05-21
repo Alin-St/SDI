@@ -1,9 +1,9 @@
+import LoadingButton from "@mui/lab/LoadingButton";
 import { Box, Button, TextField } from "@mui/material";
+import { useSnackbar } from "notistack";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSnackbar } from "notistack";
-import usePaintingService from "../services/PaintingService";
-import LoadingButton from "@mui/lab/LoadingButton";
+import usePaintingService from "../../../services/PaintingService";
 
 const AddPaintingPage = () => {
   const navigate = useNavigate();

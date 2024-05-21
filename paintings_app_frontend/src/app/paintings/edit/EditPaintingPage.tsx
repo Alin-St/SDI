@@ -1,9 +1,9 @@
+import { LoadingButton } from "@mui/lab";
 import { Box, Button, TextField } from "@mui/material";
 import { useSnackbar } from "notistack";
-import { useNavigate, useParams } from "react-router-dom";
-import usePaintingService from "../services/PaintingService";
 import { useRef, useState } from "react";
-import { LoadingButton } from "@mui/lab";
+import { useNavigate, useParams } from "react-router-dom";
+import usePaintingService from "../../../services/PaintingService";
 
 const EditPaintingPage = () => {
   const id = Number(useParams().id);

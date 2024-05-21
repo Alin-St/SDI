@@ -2,9 +2,9 @@ import { Button, Stack } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import usePaintingService from "../../services/PaintingService";
-import DeletePaintingDialog from "./DeletePaintingDialog";
-import ExportPaintingsDialog from "./ExportPaintingsDialog";
-import PaintingsTableComponent from "./PaintingsTableComponent";
+import DeletePaintingDialog from "../../components/paintings/DeletePaintingDialog";
+import ExportPaintingsDialog from "../../components/paintings/ExportPaintingsDialog";
+import PaintingsTableComponent from "../../components/paintings/PaintingsTableComponent";
 
 const AllPaintingsPage = () => {
   const navigate = useNavigate();
