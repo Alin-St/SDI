@@ -1,7 +1,14 @@
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import ReplayIcon from "@mui/icons-material/Replay";
-import { Container, IconButton, Paper, Stack, Tooltip } from "@mui/material";
+import {
+  Container,
+  CssBaseline,
+  IconButton,
+  Paper,
+  Stack,
+  Tooltip,
+} from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { useState } from "react";
@@ -36,6 +43,7 @@ const MainLayout = () => {
 
   return (
     <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
+      <CssBaseline />
       <SnackbarProvider>
         <Paper
           elevation={0}
