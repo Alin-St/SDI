@@ -50,14 +50,7 @@ Pe fe, legat de gold challenge, să facă infinite scroll care sa tot dea fetch 
 > A: In situatii de genul se face mock. Se considera ca baza de date/un API e testat(a) si se fac teste pe integrarea lor (strict codul tau)  
 > Q: A, ok, deci facem testele doar sa se comporte de parca modifica o baza de date, dar noi nu testam in sine baza de date. Multumesc!
 
-Salut! Trebuie sa va dau si ceva task ah-hoc
-
-Presupun ca toti aveti un endpoint de getAll
-
-As vrea sa faceti o sortare dupa un field oarecare cu query param
-
-De exemplu
-GET /posts - aduce postari in ordine cronologică
-GET /posts?time=DESC - aduce postari in ordine inversa
-
+Salut! Trebuie sa va dau si ceva task **ad-hoc**. Presupun ca toti aveti un endpoint de getAll. As vrea sa faceti o sortare dupa un field oarecare cu query param. De exemplu:  
+GET /posts - aduce postari in ordine cronologică  
+GET /posts?time=DESC - aduce postari in ordine inversa  
 Trb si asta pt 5. Merci
