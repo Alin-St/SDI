@@ -28,7 +28,7 @@ const AllPaintingsPage = () => {
 
   return (
     <>
-      <h1>All Paintings</h1>
+      <h1>Paintings</h1>
       <Stack direction="row" justifyContent="space-between">
         <Button
           variant="contained"

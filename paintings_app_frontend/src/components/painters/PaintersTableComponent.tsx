@@ -12,24 +12,22 @@ import {
 } from "@mui/material";
 
 interface Props {
-  paintings: Painting[];
-  selectedPaintings: number[];
-  setSelectedPaintings: (ids: number[]) => void;
-  viewPainting: (id: number) => void;
-  editPainting: (id: number) => void;
-  deletePaintings: (ids: number[]) => void;
+  painters: Painter[];
+  selectedPainters: number[];
+  setSelectedPainters: (ids: number[]) => void;
+  viewPainter: (id: number) => void;
+  editPainter: (id: number) => void;
+  deletePainters: (ids: number[]) => void;
 }
 
-export default function PaintingsTableComponent(props: Props) {
-  const {
-    paintings,
-    selectedPaintings,
-    setSelectedPaintings,
-    viewPainting,
-    editPainting,
-    deletePaintings,
-  } = props;
-
+export default function PaintersTableComponent({
+  painters,
+  selectedPainters,
+  setSelectedPainters,
+  viewPainter,
+  editPainter,
+  deletePainters,
+}: Props) {
   return (
     <TableContainer component={Paper} style={{ maxHeight: "70vh" }}>
       <Table>
@@ -41,53 +39,47 @@ export default function PaintingsTableComponent(props: Props) {
           <TableRow>
             <TableCell>
               <Checkbox
-                checked={selectedPaintings.length === paintings.length}
+                checked={selectedPainters.length === painters.length}
                 indeterminate={
-                  selectedPaintings.length > 0 &&
-                  selectedPaintings.length < paintings.length
+                  selectedPainters.length > 0 &&
+                  selectedPainters.length < painters.length
                 }
                 onChange={(e) => {
                   if (e.target.checked) {
-                    setSelectedPaintings(paintings.map((p) => p.id));
+                    setSelectedPainters(painters.map((p) => p.id));
                   } else {
-                    setSelectedPaintings([]);
+                    setSelectedPainters([]);
                   }
                 }}
               />
             </TableCell>
             <TableCell>Name</TableCell>
-            <TableCell>Description</TableCell>
-            <TableCell>Year</TableCell>
             <TableCell align="right">Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {paintings.map((p) => (
+          {painters.map((p) => (
             <TableRow key={p.id}>
               <TableCell>
                 <Checkbox
-                  checked={selectedPaintings.includes(p.id)}
+                  checked={selectedPainters.includes(p.id)}
                   onChange={(e) => {
                     if (e.target.checked) {
-                      setSelectedPaintings([...selectedPaintings, p.id]);
+                      setSelectedPainters([...selectedPainters, p.id]);
                     } else {
-                      setSelectedPaintings(
-                        selectedPaintings.filter((id) => id !== p.id)
+                      setSelectedPainters(
+                        selectedPainters.filter((id) => id !== p.id)
                       );
                     }
                   }}
                 />
               </TableCell>
               <TableCell>{p.name}</TableCell>
-              <TableCell>{p.description}</TableCell>
-              <TableCell>{p.year}</TableCell>
               <TableCell align="right">
                 <ButtonGroup variant="contained" size="small">
-                  <Button onClick={() => deletePaintings([p.id])}>
-                    Delete
-                  </Button>
-                  <Button onClick={() => editPainting(p.id)}>Edit</Button>
-                  <Button onClick={() => viewPainting(p.id)}>View</Button>
+                  <Button onClick={() => deletePainters([p.id])}>Delete</Button>
+                  <Button onClick={() => editPainter(p.id)}>Edit</Button>
+                  <Button onClick={() => viewPainter(p.id)}>View</Button>
                 </ButtonGroup>
               </TableCell>
             </TableRow>
