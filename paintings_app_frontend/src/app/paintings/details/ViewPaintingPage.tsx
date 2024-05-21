@@ -1,6 +1,6 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import usePaintingService from "../../../services/PaintingService";
+import usePaintingService from "../../../service/PaintingService";
 
 const ViewPaintingPage = () => {
   const id = Number(useParams().id);

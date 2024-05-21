@@ -1,7 +1,7 @@
 import { Button, Stack } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import usePaintingService from "../../services/PaintingService";
+import usePaintingService from "../../service/PaintingService";
 import DeletePaintingDialog from "../../components/paintings/DeletePaintingDialog";
 import ExportPaintingsDialog from "../../components/paintings/ExportPaintingsDialog";
 import PaintingsTableComponent from "../../components/paintings/PaintingsTableComponent";

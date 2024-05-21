@@ -1,7 +1,7 @@
 import { CircularProgress } from "@mui/material";
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import usePaintingService from "../../services/PaintingService";
+import usePaintingService from "../../service/PaintingService";
 
 export enum LoadingStatus {
   LOADING,

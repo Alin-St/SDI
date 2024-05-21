@@ -3,7 +3,7 @@ import { Box, Button, TextField } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import usePaintingService from "../../../services/PaintingService";
+import usePaintingService from "../../../service/PaintingService";
 
 const EditPaintingPage = () => {
   const id = Number(useParams().id);

@@ -3,13 +3,13 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
-import MainLayout from "./MainLayout";
-import AllPaintingsPage from "./paintings/AllPaintingsPage";
-import AddPaintingPage from "./paintings/add/AddPaintingPage";
-import ViewPaintingPage from "./paintings/details/ViewPaintingPage";
-import EditPaintingPage from "./paintings/edit/EditPaintingPage";
+import MainLayout from "./app/MainLayout";
+import AllPaintingsPage from "./app/paintings/AllPaintingsPage";
+import AddPaintingPage from "./app/paintings/add/AddPaintingPage";
+import ViewPaintingPage from "./app/paintings/details/ViewPaintingPage";
+import EditPaintingPage from "./app/paintings/edit/EditPaintingPage";
 
-function App() {
+export default function RoutingComponent() {
   const router = createBrowserRouter([
     {
       path: "/",
@@ -45,5 +45,3 @@ function App() {
 
   return <RouterProvider router={router} />;
 }
-
-export default App;

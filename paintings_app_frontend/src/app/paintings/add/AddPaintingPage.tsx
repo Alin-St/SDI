@@ -3,7 +3,7 @@ import { Box, Button, TextField } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import usePaintingService from "../../../services/PaintingService";
+import usePaintingService from "../../../service/PaintingService";
 
 const AddPaintingPage = () => {
   const navigate = useNavigate();

@@ -8,7 +8,7 @@ import { useState } from "react";
 import GlobalStateComponent, {
   LoadingStatus,
 } from "../components/layout/GlobalStateComponent";
-import usePaintingService from "../services/PaintingService";
+import usePaintingService from "../service/PaintingService";
 import { darkTheme, lightTheme } from "../themes";
 
 const MainLayout = () => {

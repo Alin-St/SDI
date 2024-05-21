@@ -2,7 +2,7 @@ import { LoadingButton } from "@mui/lab";
 import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
-import usePaintingService from "../../services/PaintingService";
+import usePaintingService from "../../service/PaintingService";
 
 interface Props {
   deleteIds: number[];
