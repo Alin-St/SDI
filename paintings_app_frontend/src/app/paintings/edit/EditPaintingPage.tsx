@@ -94,15 +94,6 @@ const EditPaintingPage = () => {
             />
           </div>
           <div>
-            <LoadingButton
-              type="submit"
-              variant="contained"
-              loading={isUpdating}
-            >
-              Save
-            </LoadingButton>
-          </div>
-          <div>
             <TextField
               select
               label="Painter"
@@ -116,6 +107,15 @@ const EditPaintingPage = () => {
                 </MenuItem>
               ))}
             </TextField>
+          </div>
+          <div>
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              loading={isUpdating}
+            >
+              Save
+            </LoadingButton>
           </div>
         </form>
       )}
