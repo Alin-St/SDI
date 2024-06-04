@@ -1,18 +1,21 @@
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, MenuItem, TextField } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import usePainterService from "../../../service/PainterService";
 import usePaintingService from "../../../service/PaintingService";
 
 const AddPaintingPage = () => {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const { addPainting } = usePaintingService();
+  const { painters } = usePainterService();
 
   const nameRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
   const yearRef = useRef<HTMLInputElement>(null);
+  const [painterIdStr, setPainterIdStr] = useState("");
 
   const [isAdding, setIsAdding] = useState(false);
 
@@ -22,10 +25,11 @@ const AddPaintingPage = () => {
     const name = nameRef.current?.value || "";
     const description = descriptionRef.current?.value || "";
     const year = parseInt(yearRef.current?.value || "0", 10);
+    const painterId = parseInt(painterIdStr, 10);
 
     setIsAdding(true);
     try {
-      await addPainting({ name, description, year });
+      await addPainting({ name, description, year, painterId });
       enqueueSnackbar("Painting added successfully", {
         variant: "success",
       });
@@ -72,6 +76,21 @@ const AddPaintingPage = () => {
             inputRef={yearRef}
             defaultValue="0"
           />
+        </div>
+        <div>
+          <TextField
+            select
+            label="Painter"
+            sx={{ width: 222 }}
+            value={painterIdStr}
+            onChange={(e) => setPainterIdStr(e.target.value)}
+          >
+            {painters.map((painter) => (
+              <MenuItem key={painter.id} value={painter.id}>
+                {painter.name}
+              </MenuItem>
+            ))}
+          </TextField>
         </div>
         <div>
           <LoadingButton type="submit" variant="contained" loading={isAdding}>

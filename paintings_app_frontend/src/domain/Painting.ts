@@ -3,4 +3,5 @@ interface Painting {
   name: string;
   description: string;
   year: number;
+  painterId: number;
 }

@@ -1,13 +1,15 @@
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, MenuItem, TextField } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import usePainterService from "../../../service/PainterService";
 import usePaintingService from "../../../service/PaintingService";
 
 const EditPaintingPage = () => {
   const id = Number(useParams().id);
   const { paintings, updatePainting } = usePaintingService();
+  const { painters } = usePainterService();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -16,6 +18,9 @@ const EditPaintingPage = () => {
   const nameRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
   const yearRef = useRef<HTMLInputElement>(null);
+  const [painterIdStr, setPainterIdStr] = useState(
+    painting?.painterId.toString() || ""
+  );
 
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -25,6 +30,7 @@ const EditPaintingPage = () => {
     const name = nameRef.current?.value || "";
     const description = descriptionRef.current?.value || "";
     const year = parseInt(yearRef.current?.value || "0", 10);
+    const painterId = parseInt(painterIdStr, 10);
 
     if (!painting?.id) throw new Error("Painting not found");
 
@@ -35,6 +41,7 @@ const EditPaintingPage = () => {
         name,
         description,
         year,
+        painterId,
       });
       enqueueSnackbar("Painting added successfully", {
         variant: "success",
@@ -92,6 +99,21 @@ const EditPaintingPage = () => {
             >
               Save
             </LoadingButton>
+          </div>
+          <div>
+            <TextField
+              select
+              label="Painter"
+              sx={{ width: 222 }}
+              value={painterIdStr}
+              onChange={(e) => setPainterIdStr(e.target.value)}
+            >
+              {painters.map((painter) => (
+                <MenuItem key={painter.id} value={painter.id}>
+                  {painter.name}
+                </MenuItem>
+              ))}
+            </TextField>
           </div>
         </form>
       )}

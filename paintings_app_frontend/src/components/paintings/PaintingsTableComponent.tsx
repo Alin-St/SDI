@@ -10,6 +10,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import usePainterService from "../../service/PainterService";
 
 interface Props {
   paintings: Painting[];
@@ -29,6 +30,8 @@ export default function PaintingsTableComponent(props: Props) {
     editPainting,
     deletePaintings,
   } = props;
+
+  const { getPainterById } = usePainterService();
 
   return (
     <TableContainer component={Paper} style={{ maxHeight: "70vh" }}>
@@ -58,6 +61,7 @@ export default function PaintingsTableComponent(props: Props) {
             <TableCell>Name</TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Year</TableCell>
+            <TableCell>Painter</TableCell>
             <TableCell align="right">Actions</TableCell>
           </TableRow>
         </TableHead>
@@ -81,6 +85,9 @@ export default function PaintingsTableComponent(props: Props) {
               <TableCell>{p.name}</TableCell>
               <TableCell>{p.description}</TableCell>
               <TableCell>{p.year}</TableCell>
+              <TableCell>
+                {getPainterById(p.painterId)?.name || "(None)"}
+              </TableCell>
               <TableCell align="right">
                 <ButtonGroup variant="contained" size="small">
                   <Button onClick={() => deletePaintings([p.id])}>

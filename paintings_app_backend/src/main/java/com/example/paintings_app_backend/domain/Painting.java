@@ -1,5 +1,6 @@
 package com.example.paintings_app_backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,12 @@ public class Painting {
     int year;
 
     @ManyToOne
+    @JsonIgnore
     Painter painter;
+
+    public int getPainterId() {
+        return (painter == null) ? -1 : painter.getId();
+    }
 
     public void setPainterId(int value) {
         painter = new Painter();
