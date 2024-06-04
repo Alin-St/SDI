@@ -19,7 +19,9 @@ const EditPaintingPage = () => {
   const descriptionRef = useRef<HTMLInputElement>(null);
   const yearRef = useRef<HTMLInputElement>(null);
   const [painterIdStr, setPainterIdStr] = useState(
-    painting?.painterId.toString() || ""
+    painting?.painterId && painting?.painterId >= 0
+      ? painting.painterId.toString()
+      : ""
   );
 
   const [isUpdating, setIsUpdating] = useState(false);
