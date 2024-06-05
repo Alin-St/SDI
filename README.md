@@ -13,6 +13,7 @@ Assignments for "Systems for Design and Implementation" course.
 [Lab Project Example (with teacher)](https://github.com/cinnamonbreakfast/mpp24/tree/feature/sockets_and_stores)
 
 Project Structure:
+
 - Frontend
   - React + Vite + Material UI
   - IDE: VS Code
@@ -21,3 +22,4 @@ Project Structure:
   - Java + Spring
   - IDE: IntelliJ IDEA
   - SDK: 17
+  - Databse username: `postgres`, password: `postgres`
