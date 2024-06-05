@@ -5,15 +5,16 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import MainLayout from "./app/MainLayout";
-import AllPaintingsPage from "./app/paintings/AllPaintingsPage";
-import AddPaintingPage from "./app/paintings/add/AddPaintingPage";
-import ViewPaintingPage from "./app/paintings/details/ViewPaintingPage";
-import EditPaintingPage from "./app/paintings/edit/EditPaintingPage";
+import LoginPage from "./app/login/LoginPage";
 import AllPaintersPage from "./app/painters/AllPaintersPage";
 import AddPainterPage from "./app/painters/add/AddPainterPage";
 import ViewPainterPage from "./app/painters/details/ViewPainterPage";
 import EditPainterPage from "./app/painters/edit/EditPainterPage";
-import LoginPage from "./app/login/LoginPage";
+import AllPaintingsPage from "./app/paintings/AllPaintingsPage";
+import AddPaintingPage from "./app/paintings/add/AddPaintingPage";
+import ViewPaintingPage from "./app/paintings/details/ViewPaintingPage";
+import EditPaintingPage from "./app/paintings/edit/EditPaintingPage";
+import DashboardLayout from "./components/layout/DashboardLayout";
 
 export default function RoutingComponent() {
   const router = createBrowserRouter([
@@ -34,7 +35,11 @@ export default function RoutingComponent() {
           element: <LoginPage />,
         },
         {
-          element: <Outlet />,
+          element: (
+            <DashboardLayout>
+              <Outlet />
+            </DashboardLayout>
+          ),
           children: [
             {
               path: "paintings",
@@ -52,11 +57,7 @@ export default function RoutingComponent() {
               path: "painting/edit/:id",
               element: <EditPaintingPage />,
             },
-          ],
-        },
-        {
-          element: <Outlet />,
-          children: [
+
             {
               path: "painters",
               element: <AllPaintersPage />,

@@ -1,29 +1,19 @@
 import { CircularProgress } from "@mui/material";
 import { ReactNode, useEffect } from "react";
-import usePaintingService from "../../service/PaintingService";
 import usePainterService from "../../service/PainterService";
-
-export enum LoadingStatus {
-  LOADING,
-  LOADED,
-  ERROR,
-}
-
-interface Props {
-  children: ReactNode;
-  loadingStatus: LoadingStatus;
-  setLoadingStatus: (status: LoadingStatus) => void;
-}
+import usePaintingService from "../../service/PaintingService";
+import useGlobalStore, { LoadingStatus } from "../../state/GlobalStore";
 
 let didInit = false;
 
-const GlobalStateComponent = ({
-  children,
-  loadingStatus,
-  setLoadingStatus,
-}: Props) => {
+interface Props {
+  children: ReactNode;
+}
+
+const GlobalStateComponent = ({ children }: Props) => {
   const { fetchAllPaintings } = usePaintingService();
   const { fetchAllPainters } = usePainterService();
+  const { loadingStatus, setLoadingStatus } = useGlobalStore();
 
   useEffect(() => {
     if (didInit) return;

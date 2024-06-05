@@ -7,7 +7,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useSnackbar } from "notistack";
 import useAppService from "../../service/AppService";
-import { LoadingStatus } from "./GlobalStateComponent";
+import { LoadingStatus } from "../../state/GlobalStore";
 
 const topbarZIndex = 1201; // default z-index for Drawer + 1
 
