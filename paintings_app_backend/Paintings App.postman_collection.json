@@ -125,7 +125,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": 0,\n\t\"name\": \"painting 1\",\n    \"description\": \"description 1\",\n    \"publicationYear\": 1001\n}\n",
+							"raw": "{\n\t\"name\": \"fds\",\n    \"description\": \"\",\n    \"publicationYear\": 0,\n    \"painterId\": -1\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -448,6 +448,45 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "App",
+			"item": [
+				{
+					"name": "resetAll",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/resetall",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"resetall"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAll",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/deleteall",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"deleteall"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
@@ -478,6 +517,11 @@
 		{
 			"key": "painters_url",
 			"value": "127.0.0.1:8080/api/painters",
+			"type": "string"
+		},
+		{
+			"key": "app_url",
+			"value": "127.0.0.1:8080/api/app",
 			"type": "string"
 		}
 	]
