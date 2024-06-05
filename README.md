@@ -22,4 +22,4 @@ Project Structure:
   - Java + Spring
   - IDE: IntelliJ IDEA
   - SDK: 17
-  - Databse username: `postgres`, password: `postgres`
+  - Databse `localhost:5432/paintingsapp` username: `postgres`, password: `postgres`
