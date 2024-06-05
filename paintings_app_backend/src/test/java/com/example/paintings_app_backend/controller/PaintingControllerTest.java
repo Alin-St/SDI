@@ -10,7 +10,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -35,21 +34,31 @@ public class PaintingControllerTest {
 
     @Test
     public void testGetById() throws Exception {
-        given(paintingService.getById(1)).willReturn(Optional.of(new Painting()));
+        given(paintingService.getById(1)).willReturn(new Painting());
         mockMvc.perform(get("/api/paintings/1"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testAdd() throws Exception {
+        // Mock returning a painting with the id set to a specific value
+        given(paintingService.add(Mockito.any())).willAnswer(invocation -> {
+            var painting = invocation.getArgument(0, Painting.class);
+            painting.setId(1);
+            return painting;
+        });
+
         mockMvc.perform(post("/api/paintings")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"name\":\"painting 1\",\"description\":\"description 1\",\"publicationYear\":1001}"))
-                .andExpect(status().isOk());
+                        .content("{\"name\":\"painting 1\",\"description\":\"description 1\",\"publicationYear\":1001,\"painterId\":-1}"))
+                .andExpect(status().isCreated());
     }
 
     @Test
     public void testUpdate() throws Exception {
+        // Mock returning the updated painting
+        given(paintingService.update(Mockito.anyInt(), Mockito.any())).willAnswer(invocation -> invocation.getArgument(1));
+
         mockMvc.perform(put("/api/paintings/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"name\":\"painting 1\",\"description\":\"description 1\",\"publicationYear\":1001}"))
@@ -59,6 +68,6 @@ public class PaintingControllerTest {
     @Test
     public void testDelete() throws Exception {
         mockMvc.perform(delete("/api/paintings/1"))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
     }
 }

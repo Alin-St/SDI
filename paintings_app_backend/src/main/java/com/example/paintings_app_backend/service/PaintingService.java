@@ -22,11 +22,9 @@ public class PaintingService {
     }
 
     public List<Painting> getAll(boolean desc) {
-        if (desc) {
-            return repository.findAll(Sort.by(Sort.Direction.DESC, "name"));
-        } else {
-            return repository.findAll(Sort.by(Sort.Direction.ASC, "name"));
-        }
+        var paintings = repository.findAll();
+        paintings.sort((p1, p2) -> desc ? p2.getName().compareTo(p1.getName()) : p1.getName().compareTo(p2.getName()));
+        return paintings;
     }
 
     public Painting getById(int id) {

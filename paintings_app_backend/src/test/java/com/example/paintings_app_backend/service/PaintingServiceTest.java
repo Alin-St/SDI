@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
@@ -23,9 +24,17 @@ public class PaintingServiceTest {
 
     @Test
     public void testGetAll() {
-        given(paintingRepository.findAll()).willReturn(Arrays.asList(new Painting(), new Painting()));
-        paintingService.getAll(false);
+        var paintings = Arrays.asList(new Painting("p1", null, 0, -1), new Painting("p2", null, 0, -1));
+        given(paintingRepository.findAll()).willReturn(paintings);
+
+        // Get all paintings in ascending order
+        var result = paintingService.getAll(false);
         verify(paintingRepository).findAll();
+        assert(Objects.equals(result.get(0).getName(), "p1") && Objects.equals(result.get(1).getName(), "p2"));
+
+        // Get all paintings in descending order
+        result = paintingService.getAll(true);
+        assert(Objects.equals(result.get(0).getName(), "p2") && Objects.equals(result.get(1).getName(), "p1"));
     }
 
     @Test
@@ -44,6 +53,7 @@ public class PaintingServiceTest {
 
     @Test
     public void testUpdate() {
+        given(paintingRepository.findById(1)).willReturn(Optional.of(new Painting()));
         Painting painting = new Painting();
         paintingService.update(1, painting);
         verify(paintingRepository).save(painting);
@@ -51,6 +61,7 @@ public class PaintingServiceTest {
 
     @Test
     public void testDelete() {
+        given(paintingRepository.findById(1)).willReturn(Optional.of(new Painting()));
         paintingService.delete(1);
         verify(paintingRepository).deleteById(1);
     }
