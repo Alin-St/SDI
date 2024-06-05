@@ -2,6 +2,7 @@ package com.example.paintings_app_backend.controller;
 
 import com.example.paintings_app_backend.domain.Painting;
 import com.example.paintings_app_backend.service.PaintingService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +28,10 @@ public class PaintingController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Painting>> getAll() {
+    public ResponseEntity<List<Painting>> getAll(@RequestParam(name = "sort", required = false, defaultValue = "asc") String sort) {
         testSleep();
-        var result = service.getAll();
+        boolean desc = "desc".equalsIgnoreCase(sort);
+        var result = service.getAll(desc);
         return ResponseEntity.ok(result);
     }
 

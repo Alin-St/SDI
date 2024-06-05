@@ -28,7 +28,7 @@ public class PaintingControllerTest {
 
     @Test
     public void testGetAll() throws Exception {
-        given(paintingService.getAll()).willReturn(Arrays.asList(new Painting(), new Painting()));
+        given(paintingService.getAll(false)).willReturn(Arrays.asList(new Painting(), new Painting()));
         mockMvc.perform(get("/api/paintings"))
                 .andExpect(status().isOk());
     }

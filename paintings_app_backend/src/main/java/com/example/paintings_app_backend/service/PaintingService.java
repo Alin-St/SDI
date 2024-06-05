@@ -3,6 +3,7 @@ package com.example.paintings_app_backend.service;
 import com.example.paintings_app_backend.domain.Painting;
 import com.example.paintings_app_backend.repository.IPaintingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +20,12 @@ public class PaintingService {
         this.repository = repository;
     }
 
-    public List<Painting> getAll() {
-        return repository.findAll();
+    public List<Painting> getAll(boolean desc) {
+        if (desc) {
+            return repository.findAll(Sort.by(Sort.Direction.DESC, "name"));
+        } else {
+            return repository.findAll(Sort.by(Sort.Direction.ASC, "name"));
+        }
     }
 
     public Optional<Painting> getById(int id) {

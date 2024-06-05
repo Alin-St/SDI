@@ -8,7 +8,7 @@ import PaintingsTableComponent from "../../components/paintings/PaintingsTableCo
 
 const AllPaintingsPage = () => {
   const navigate = useNavigate();
-  const { paintings } = usePaintingService();
+  const { paintings, fetchAllPaintings } = usePaintingService();
   const [selectedPaintings, setSelectedPaintings] = useState<number[]>([]);
   const [deleteIds, setDeleteIds] = useState<number[]>([]);
   const [showExportDialog, setShowExportDialog] = useState(false);
@@ -24,6 +24,10 @@ const AllPaintingsPage = () => {
   const handleExport = () => {
     setShowExportDialog(true);
     setExportDialogKey(Date.now());
+  };
+
+  const handleSortPaintings = (desc: boolean) => {
+    fetchAllPaintings(desc);
   };
 
   return (
@@ -62,6 +66,7 @@ const AllPaintingsPage = () => {
         viewPainting={(id) => navigate("/painting/details/" + id.toString())}
         editPainting={(id) => navigate("/painting/edit/" + id.toString())}
         deletePaintings={(ids) => setDeleteIds(ids)}
+        sortPaintings={handleSortPaintings}
       />
 
       <DeletePaintingDialog {...{ deleteIds, setDeleteIds }} />

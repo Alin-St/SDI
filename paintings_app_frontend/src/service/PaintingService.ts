@@ -16,8 +16,11 @@ const usePaintingStore = create<PaintingStore>()((set) => ({
 const usePaintingService = () => {
   const { paintings, setPaintings } = usePaintingStore();
 
-  const fetchAllPaintings = async () => {
-    const fetchedPaintings = (await axios.get(API_URL)).data as Painting[];
+  const fetchAllPaintings = async (desc?: boolean) => {
+    const descQueryParam =
+      desc !== undefined ? `?sort=${desc ? "desc" : "asc"}` : "";
+    const fetchedPaintings = (await axios.get(`${API_URL}${descQueryParam}`))
+      .data as Painting[];
     setPaintings(fetchedPaintings);
   };
 

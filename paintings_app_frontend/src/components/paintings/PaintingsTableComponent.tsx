@@ -1,7 +1,10 @@
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import {
   Button,
   ButtonGroup,
   Checkbox,
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -19,6 +22,7 @@ interface Props {
   viewPainting: (id: number) => void;
   editPainting: (id: number) => void;
   deletePaintings: (ids: number[]) => void;
+  sortPaintings: (desc: boolean) => void;
 }
 
 export default function PaintingsTableComponent(props: Props) {
@@ -29,6 +33,7 @@ export default function PaintingsTableComponent(props: Props) {
     viewPainting,
     editPainting,
     deletePaintings,
+    sortPaintings,
   } = props;
 
   const { getPainterById } = usePainterService();
@@ -58,7 +63,15 @@ export default function PaintingsTableComponent(props: Props) {
                 }}
               />
             </TableCell>
-            <TableCell>Name</TableCell>
+            <TableCell>
+              Name
+              <IconButton size="small" onClick={() => sortPaintings(false)}>
+                <ArrowDownwardIcon />
+              </IconButton>
+              <IconButton size="small" onClick={() => sortPaintings(true)}>
+                <ArrowUpwardIcon />
+              </IconButton>
+            </TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Year</TableCell>
             <TableCell>Painter</TableCell>

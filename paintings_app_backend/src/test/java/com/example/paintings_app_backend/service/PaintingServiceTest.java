@@ -24,7 +24,7 @@ public class PaintingServiceTest {
     @Test
     public void testGetAll() {
         given(paintingRepository.findAll()).willReturn(Arrays.asList(new Painting(), new Painting()));
-        paintingService.getAll();
+        paintingService.getAll(false);
         verify(paintingRepository).findAll();
     }
 
