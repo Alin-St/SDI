@@ -2,14 +2,17 @@ import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { SnackbarProvider } from "notistack";
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import GlobalStateComponent, {
   LoadingStatus,
 } from "../components/layout/GlobalStateComponent";
 import { lightTheme } from "../themes";
 
-const MainLayout = () => {
+interface Props {
+  children: React.ReactNode;
+}
+
+const MainLayout = ({ children }: Props) => {
   const [theme, setTheme] = useState(lightTheme);
   const [loadingStatus, setLoadingStatus] = useState(LoadingStatus.LOADING);
 
@@ -24,7 +27,7 @@ const MainLayout = () => {
           <DashboardLayout
             {...{ theme, setTheme, loadingStatus, setLoadingStatus }}
           >
-            <Outlet />
+            {children}
           </DashboardLayout>
         </GlobalStateComponent>
       </SnackbarProvider>

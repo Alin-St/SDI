@@ -1,5 +1,6 @@
 import {
   Navigate,
+  Outlet,
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
@@ -12,49 +13,67 @@ import AllPaintersPage from "./app/painters/AllPaintersPage";
 import AddPainterPage from "./app/painters/add/AddPainterPage";
 import ViewPainterPage from "./app/painters/details/ViewPainterPage";
 import EditPainterPage from "./app/painters/edit/EditPainterPage";
+import LoginPage from "./app/login/LoginPage";
 
 export default function RoutingComponent() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <MainLayout />,
+      element: (
+        <MainLayout>
+          <Outlet />
+        </MainLayout>
+      ),
       children: [
         {
           index: true,
           element: <Navigate to="paintings" />,
         },
         {
-          path: "paintings",
-          element: <AllPaintingsPage />,
+          path: "login",
+          element: <LoginPage />,
         },
         {
-          path: "painting/add",
-          element: <AddPaintingPage />,
+          element: <Outlet />,
+          children: [
+            {
+              path: "paintings",
+              element: <AllPaintingsPage />,
+            },
+            {
+              path: "painting/add",
+              element: <AddPaintingPage />,
+            },
+            {
+              path: "painting/details/:id",
+              element: <ViewPaintingPage />,
+            },
+            {
+              path: "painting/edit/:id",
+              element: <EditPaintingPage />,
+            },
+          ],
         },
         {
-          path: "painting/details/:id",
-          element: <ViewPaintingPage />,
-        },
-        {
-          path: "painting/edit/:id",
-          element: <EditPaintingPage />,
-        },
-
-        {
-          path: "painters",
-          element: <AllPaintersPage />,
-        },
-        {
-          path: "painter/add",
-          element: <AddPainterPage />,
-        },
-        {
-          path: "painter/details/:id",
-          element: <ViewPainterPage />,
-        },
-        {
-          path: "painter/edit/:id",
-          element: <EditPainterPage />,
+          element: <Outlet />,
+          children: [
+            {
+              path: "painters",
+              element: <AllPaintersPage />,
+            },
+            {
+              path: "painter/add",
+              element: <AddPainterPage />,
+            },
+            {
+              path: "painter/details/:id",
+              element: <ViewPainterPage />,
+            },
+            {
+              path: "painter/edit/:id",
+              element: <EditPainterPage />,
+            },
+          ],
         },
       ],
     },
