@@ -39,26 +39,19 @@ public class PaintingController {
     public ResponseEntity<Painting> getById(@PathVariable int id) {
         testSleep();
         var result = service.getById(id);
-        return result.map(ResponseEntity::ok)
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping
     public ResponseEntity<Painting> add(@RequestBody Painting painting) {
         testSleep();
-        try {
-            var result = service.add(painting);
-            return new ResponseEntity<>(result, HttpStatus.CREATED);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        var result = service.add(painting);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Painting> update(@PathVariable int id, @RequestBody Painting painting) {
         testSleep();
-        if (service.getById(id).isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         var result = service.update(id, painting);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -66,8 +59,6 @@ public class PaintingController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
         testSleep();
-        if (service.getById(id).isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         service.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
