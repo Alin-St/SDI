@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import axios from "axios";
-import defaultPainters from "../domain/defaultPainters";
 
 const API_URL = "http://127.0.0.1:8080/api/painters";
 
@@ -59,22 +58,6 @@ const usePainterService = () => {
     setPainters(painters.filter((p) => !ids.includes(p.id)));
   };
 
-  const setDefaultPainters = async () => {
-    // Fetch all painters
-    const oldPainters = (await axios.get(API_URL)).data as Painter[];
-    // Delete all painters
-    await Promise.all(
-      oldPainters.map((p) => axios.delete(API_URL + `/${p.id}`))
-    );
-    // Add default painters
-    const newPainters = await Promise.all(
-      defaultPainters.map(
-        async (p) => (await axios.post(API_URL, p)).data as Painter
-      )
-    );
-    setPainters(newPainters);
-  };
-
   return {
     painters,
     fetchAllPainters,
@@ -84,7 +67,6 @@ const usePainterService = () => {
     updatePainter,
     deletePainter,
     deletePainters,
-    setDefaultPainters,
   };
 };
 

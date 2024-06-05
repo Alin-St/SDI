@@ -15,7 +15,7 @@ const AddPaintingPage = () => {
   const nameRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
   const yearRef = useRef<HTMLInputElement>(null);
-  const [painterIdStr, setPainterIdStr] = useState("");
+  const [painterIdStr, setPainterIdStr] = useState("-1");
 
   const [isAdding, setIsAdding] = useState(false);
 
@@ -35,7 +35,7 @@ const AddPaintingPage = () => {
       });
       navigate("/paintings");
     } catch (error) {
-      enqueueSnackbar("Failed to add painting", {
+      enqueueSnackbar("Failed to add painting.", {
         variant: "error",
       });
     } finally {
@@ -85,6 +85,9 @@ const AddPaintingPage = () => {
             value={painterIdStr}
             onChange={(e) => setPainterIdStr(e.target.value)}
           >
+            <MenuItem key={-1} value={-1}>
+              {"(None)"}
+            </MenuItem>
             {painters.map((painter) => (
               <MenuItem key={painter.id} value={painter.id}>
                 {painter.name}

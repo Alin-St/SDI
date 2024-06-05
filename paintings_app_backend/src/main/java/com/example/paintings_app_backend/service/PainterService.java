@@ -3,6 +3,7 @@ package com.example.paintings_app_backend.service;
 import com.example.paintings_app_backend.domain.Painter;
 import com.example.paintings_app_backend.repository.IPainterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +40,13 @@ public class PainterService {
     }
 
     public void delete(int id) {
+        Optional<Painter> painter = repository.findById(id);
+        if (painter.isEmpty()) {
+            throw new ServiceException("Painter not found.", HttpStatus.NOT_FOUND);
+        }
+        if (!painter.get().getPaintings().isEmpty()) {
+            throw new ServiceException("Painter is referenced in a painting.", HttpStatus.CONFLICT);
+        }
         repository.deleteById(id);
     }
 }

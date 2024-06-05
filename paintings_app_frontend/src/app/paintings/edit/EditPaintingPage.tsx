@@ -21,7 +21,7 @@ const EditPaintingPage = () => {
   const [painterIdStr, setPainterIdStr] = useState(
     painting?.painterId && painting?.painterId >= 0
       ? painting.painterId.toString()
-      : ""
+      : "-1"
   );
 
   const [isUpdating, setIsUpdating] = useState(false);
@@ -101,6 +101,9 @@ const EditPaintingPage = () => {
               value={painterIdStr}
               onChange={(e) => setPainterIdStr(e.target.value)}
             >
+              <MenuItem key={-1} value={-1}>
+                {"(None)"}
+              </MenuItem>
               {painters.map((painter) => (
                 <MenuItem key={painter.id} value={painter.id}>
                   {painter.name}

@@ -30,7 +30,19 @@ public class Painting {
     }
 
     public void setPainterId(int value) {
-        painter = new Painter();
-        painter.setId(value);
+        if (value < 0) {
+            painter = null;
+        }
+        else {
+            painter = new Painter();
+            painter.setId(value);
+        }
+    }
+
+    public Painting(String name, String description, int year, int painterId) {
+        this.name = name;
+        this.description = description;
+        this.year = year;
+        setPainterId(painterId);
     }
 }

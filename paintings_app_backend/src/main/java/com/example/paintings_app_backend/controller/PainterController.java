@@ -2,6 +2,7 @@ package com.example.paintings_app_backend.controller;
 
 import com.example.paintings_app_backend.domain.Painter;
 import com.example.paintings_app_backend.service.PainterService;
+import com.example.paintings_app_backend.service.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,12 +63,14 @@ public class PainterController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable int id) {
+    public ResponseEntity<String> delete(@PathVariable int id) {
         testSleep();
-        if (service.getById(id).isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        service.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try {
+            service.delete(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (ServiceException e) {
+            return new ResponseEntity<>(e.getMessage(), e.status);
+        }
     }
 
     void testSleep() {

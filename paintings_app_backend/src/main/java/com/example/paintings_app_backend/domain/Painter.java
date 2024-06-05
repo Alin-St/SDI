@@ -21,4 +21,8 @@ public class Painter {
     @OneToMany(mappedBy = "painter")
     @JsonIgnore
     List<Painting> paintings;
+
+    public Painter(String name) {
+        this.name = name;
+    }
 }

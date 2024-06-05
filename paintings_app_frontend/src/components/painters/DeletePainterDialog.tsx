@@ -3,6 +3,7 @@ import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 import usePainterService from "../../service/PainterService";
+import axios from "axios";
 
 interface Props {
   deleteIds: number[];
@@ -26,7 +27,17 @@ export default function DeletePainterDialog({
       });
       setDeleteIds([]);
     } catch (error) {
-      enqueueSnackbar("Failed to delete painters", {
+      let errorMessage = "Failed to delete painters.";
+      if (
+        axios.isAxiosError(error) &&
+        error.response &&
+        error.response.data &&
+        typeof error.response.data === "string"
+      ) {
+        // If the error response data is a string, use it directly
+        errorMessage += " " + error.response.data;
+      }
+      enqueueSnackbar(errorMessage, {
         variant: "error",
       });
     } finally {

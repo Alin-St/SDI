@@ -6,8 +6,7 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useSnackbar } from "notistack";
-import usePainterService from "../../service/PainterService";
-import usePaintingService from "../../service/PaintingService";
+import useAppService from "../../service/AppService";
 import { LoadingStatus } from "./GlobalStateComponent";
 
 const topbarZIndex = 1201; // default z-index for Drawer + 1
@@ -25,15 +24,14 @@ export default function Topbar({
   loadingStatus,
   setLoadingStatus,
 }: Props) {
-  const { setDefaultPaintings } = usePaintingService();
-  const { setDefaultPainters } = usePainterService();
+  const { resetEntities } = useAppService();
   const { enqueueSnackbar } = useSnackbar();
 
   const handleResetEntities = async () => {
     setLoadingStatus(LoadingStatus.LOADING);
     try {
-      await setDefaultPaintings();
-      await setDefaultPainters();
+      await resetEntities();
+
       enqueueSnackbar("Entities reset", {
         variant: "success",
       });
