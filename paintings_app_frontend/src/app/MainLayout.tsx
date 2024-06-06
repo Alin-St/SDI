@@ -3,13 +3,15 @@ import { ThemeProvider } from "@mui/material/styles";
 import { SnackbarProvider } from "notistack";
 import GlobalStateComponent from "../components/layout/GlobalStateComponent";
 import useGlobalStore from "../state/GlobalStore";
+import { darkTheme, lightTheme } from "../themes";
 
 interface Props {
   children: React.ReactNode;
 }
 
 const MainLayout = ({ children }: Props) => {
-  const { theme } = useGlobalStore();
+  const { theme: themeString } = useGlobalStore();
+  const theme = themeString === "dark" ? darkTheme : lightTheme;
 
   return (
     <ThemeProvider theme={theme}>

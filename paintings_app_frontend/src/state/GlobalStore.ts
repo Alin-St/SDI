@@ -1,6 +1,5 @@
-import { Theme } from "@mui/material";
 import { create } from "zustand";
-import { lightTheme } from "../themes";
+import { persist } from "zustand/middleware";
 
 export enum LoadingStatus {
   LOADING,
@@ -9,17 +8,26 @@ export enum LoadingStatus {
 }
 
 interface GlobalState {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
+  theme: string;
+  setTheme: (theme: string) => void;
   loadingStatus: LoadingStatus;
   setLoadingStatus: (loadingStatus: LoadingStatus) => void;
 }
 
-const useGlobalStore = create<GlobalState>()((set) => ({
-  theme: lightTheme,
-  setTheme: (theme: Theme) => set({ theme }),
-  loadingStatus: LoadingStatus.LOADING,
-  setLoadingStatus: (loadingStatus: LoadingStatus) => set({ loadingStatus }),
-}));
+const useGlobalStore = create<GlobalState>()(
+  persist(
+    (set) => ({
+      theme: "light",
+      setTheme: (theme: string) => set({ theme }),
+      loadingStatus: LoadingStatus.LOADING,
+      setLoadingStatus: (loadingStatus: LoadingStatus) =>
+        set({ loadingStatus }),
+    }),
+    {
+      name: "global-store",
+      partialize: (state) => ({ theme: state.theme }),
+    }
+  )
+);
 
 export default useGlobalStore;

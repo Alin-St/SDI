@@ -2,7 +2,6 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import { ReactNode } from "react";
 import useGlobalStore from "../../state/GlobalStore";
-import { darkTheme, lightTheme } from "../../themes";
 import SideMenu from "./SideMenu";
 import Topbar from "./Topbar";
 
@@ -15,9 +14,9 @@ interface Props {
 export default function DashboardLayout({ children }: Props) {
   const { theme, setTheme, loadingStatus, setLoadingStatus } = useGlobalStore();
 
-  const isDarkTheme = theme === darkTheme;
+  const isDarkTheme = theme === "dark";
   const setIsDarkTheme = (isDarkTheme: boolean) =>
-    setTheme(isDarkTheme ? darkTheme : lightTheme);
+    setTheme(isDarkTheme ? "dark" : "light");
 
   return (
     <Box sx={{ display: "flex" }}>
