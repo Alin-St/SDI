@@ -5,7 +5,8 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import MainLayout from "./app/MainLayout";
-import LoginPage from "./app/login/LoginPage";
+import LoginPage from "./app/authentication/LoginPage";
+import RegisterPage from "./app/authentication/RegisterPage";
 import AllPaintersPage from "./app/painters/AllPaintersPage";
 import AddPainterPage from "./app/painters/add/AddPainterPage";
 import ViewPainterPage from "./app/painters/details/ViewPainterPage";
@@ -29,6 +30,10 @@ export default function RoutingComponent() {
         {
           index: true,
           element: <Navigate to="paintings" />,
+        },
+        {
+          path: "register",
+          element: <RegisterPage />,
         },
         {
           path: "login",
