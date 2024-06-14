@@ -24,7 +24,7 @@ public class PaintingController {
     @GetMapping("/hello")
     public ResponseEntity<String> hello() {
         testSleep();
-        return ResponseEntity.ok("Hello from PaintingController!");
+        return ResponseEntity.ok("Hello from PaintingController (secured endpoint)!");
     }
 
     @GetMapping("")

@@ -23,7 +23,7 @@ public class PainterController {
     @GetMapping("/hello")
     public ResponseEntity<String> hello() {
         testSleep();
-        return ResponseEntity.ok("Hello from PainterController!");
+        return ResponseEntity.ok("Hello from PainterController (secured endpoint)!");
     }
 
     @GetMapping("")
